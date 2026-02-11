@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   imports: [],
   template: `
-  <div class="">hello</div>
+  <div class="ml-5 text-blue-500">hello</div>
   `,
 })
 export default class Home {}
