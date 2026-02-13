@@ -13,14 +13,9 @@ export default defineConfig(({ mode }) => ({
     mainFields: ['module'],
   },
   plugins: [
-    analog(),
+    analog({
+      ssr: false
+    }),
     tailwindcss()
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['src/test-setup.ts'],
-    include: ['**/*.spec.ts'],
-    reporters: ['default'],
-  },
 }));
