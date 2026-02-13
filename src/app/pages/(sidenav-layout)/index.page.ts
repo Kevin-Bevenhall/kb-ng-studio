@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
-
 @Component({
   selector: 'app-home',
   imports: [],
   template: `
-  <div class="ml-5 text-blue-500">hello all xd</div>
+  <div class="ml-5 text-blue-500">hello all xd x</div>
   `,
 })
-export default class Home {}
+export default class Home { }
