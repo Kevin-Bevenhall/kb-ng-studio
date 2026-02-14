@@ -1,0 +1,5 @@
+{
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleAttributePerLine": true,
+  "bracketSameLine": true
+}

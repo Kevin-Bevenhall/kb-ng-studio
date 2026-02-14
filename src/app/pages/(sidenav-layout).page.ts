@@ -1,12 +1,23 @@
-import { Component, computed, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideFilm } from '@ng-icons/lucide';
 import {
-  matArrowForwardOutline, matAssignmentOutline, matCloseOutline, matDashboardOutline,
-  matHomeOutline, matPushPinOutline, matSearchOutline
+  matArrowForwardOutline,
+  matAssignmentOutline,
+  matCloseOutline,
+  matDashboardOutline,
+  matHomeOutline,
+  matPushPinOutline,
+  matSearchOutline,
 } from '@ng-icons/material-icons/outline';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInputGroupImports } from '@spartan-ng/helm/input-group';
@@ -15,85 +26,122 @@ import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
 
 @Component({
   selector: 'app-sidenav-layout-page',
-  imports: [RouterOutlet, MatSidenavModule, NgIcon, HlmIcon, HlmItemImports,
-    HlmInputGroupImports, RouterLinkWithHref, FormsModule, HlmTooltipImports],
-  providers: [provideIcons({
-    matHomeOutline, matAssignmentOutline, matDashboardOutline,
-    lucideFilm, matArrowForwardOutline, matSearchOutline, matPushPinOutline, matCloseOutline
-  })],
+  imports: [
+    RouterOutlet,
+    MatSidenavModule,
+    NgIcon,
+    HlmIcon,
+    HlmItemImports,
+    HlmInputGroupImports,
+    RouterLinkWithHref,
+    FormsModule,
+    HlmTooltipImports,
+  ],
+  providers: [
+    provideIcons({
+      matHomeOutline,
+      matAssignmentOutline,
+      matDashboardOutline,
+      lucideFilm,
+      matArrowForwardOutline,
+      matSearchOutline,
+      matPushPinOutline,
+      matCloseOutline,
+    }),
+  ],
   template: `
-  <mat-sidenav-container
-  (backdropClick)="onBackdropClick()" 
-  class="w-full h-full">
-   <mat-sidenav
-    opened="true"
-    disableClose="true"
-    position="start"
-    [mode]="sidenavPinned() ? 'side' : 'over'"
-    [style.width]="sidenavWidth()"
-    class="bg-sidebar h-full transition-all duration-400 ease-in-out overflow-hidden">
-    <div hlmInputGroup class="h-12 overflow-hidden">
-      <button hlmBtn (click)="toggleSidenavWidth()" class="p-3 mt-1 hover:cursor-text border-none outline-none">
-        <ng-icon hlm name="matSearchOutline"></ng-icon>
-      </button>
-      <input 
-      type="text" 
-      hlmInputGroupInput 
-      placeholder="Filter menu items..." 
-      [(ngModel)]="searchTerm"
-      class="pl-0">
-      <button 
-      hlmBtn 
-      (click)="toggleSidenavPinned()"
-      [hlmTooltip]="sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
-      position="right"
-      class="hover:cursor-pointer pr-4.5 mt-1">
-        @if (sidenavPinned()) {
-          <ng-icon hlm name="matCloseOutline" class="text-action"></ng-icon>
-        }
-        @else {
-          <ng-icon hlm name="matPushPinOutline" class="text-action"></ng-icon>
-        }
-      </button>
-    </div>
-    <div hlmItemGroup>
-      @for (item of filteredMenuItems(); track item.path) {
-        <a 
-        hlmItem 
-        variant="outline" 
-        size="sm" 
-        [routerLink]="item.path"
-        class="flex flex-nowrap pl-3 overflow-hidden">
-          <div hlmItemMedia
-          [hlmTooltip]="item.label"
-          position="right"
-          [tooltipDisabled]="!sidenavCollapsed()">
-            <ng-icon hlm [name]="item.icon"></ng-icon>
-          </div>
-          @if (!sidenavCollapsed()) {
-          <div hlmItemContent>
-            <div hlmItemTitle>{{ item.label }}</div>
-          </div>
-          <div hlmItemActions>
-            <ng-icon hlm name="matArrowForwardOutline"></ng-icon>
-          </div>
+    <mat-sidenav-container
+      (backdropClick)="onBackdropClick()"
+      class="w-full h-full">
+      <mat-sidenav
+        opened="true"
+        disableClose="true"
+        position="start"
+        [mode]="sidenavPinned() ? 'side' : 'over'"
+        [style.width]="sidenavWidth()"
+        class="bg-sidebar h-full transition-all duration-400 ease-in-out overflow-hidden">
+        <div
+          hlmInputGroup
+          class="h-12 overflow-hidden">
+          <button
+            hlmBtn
+            (click)="toggleSidenavWidth()"
+            class="p-3 mt-1 hover:cursor-text border-none outline-none">
+            <ng-icon
+              hlm
+              name="matSearchOutline"></ng-icon>
+          </button>
+          <input
+            #searchInput
+            type="text"
+            hlmInputGroupInput
+            placeholder="Filter menu items..."
+            [(ngModel)]="searchTerm"
+            class="pl-0" />
+          <button
+            hlmBtn
+            (click)="toggleSidenavPinned()"
+            [hlmTooltip]="sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
+            position="right"
+            class="hover:cursor-pointer mr-[16px] mt-1">
+            @if (sidenavPinned()) {
+              <ng-icon
+                hlm
+                name="matCloseOutline"
+                class="text-action"></ng-icon>
+            } @else {
+              <ng-icon
+                hlm
+                name="matPushPinOutline"
+                class="text-action"></ng-icon>
+            }
+          </button>
+        </div>
+        <div hlmItemGroup>
+          @for (item of filteredMenuItems(); track item.path) {
+            <a
+              hlmItem
+              variant="outline"
+              size="sm"
+              [routerLink]="item.path"
+              class="flex flex-nowrap pl-3 overflow-hidden">
+              <div
+                hlmItemMedia
+                [hlmTooltip]="item.label"
+                position="right"
+                [tooltipDisabled]="!sidenavCollapsed()">
+                <ng-icon
+                  hlm
+                  [name]="item.icon"></ng-icon>
+              </div>
+              @if (!sidenavCollapsed()) {
+                <div hlmItemContent>
+                  <div hlmItemTitle>{{ item.label }}</div>
+                </div>
+                <div hlmItemActions>
+                  <ng-icon
+                    hlm
+                    name="matArrowForwardOutline"></ng-icon>
+                </div>
+              }
+            </a>
           }
-      </a>
-      }
-    </div>
-    </mat-sidenav>
-    <mat-sidenav-content
-    [class.margin-left]="sidenavPinned() ? '300px' : '52px'" 
-    class="transition-all duration-400 ease-in-out">
-      <router-outlet />
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content
+        [class.margin-left]="sidenavPinned() ? '300px' : '52px'"
+        class="transition-all duration-400 ease-in-out p-4">
+        <router-outlet />
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   `,
 })
 export default class SidenavLayoutPageComponent {
+  searchInput = viewChild.required<ElementRef>('searchInput');
+
   sidenavCollapsed = signal(false);
   sidenavPinned = signal(true);
-  sidenavWidth = computed(() => this.sidenavCollapsed() ? '52px' : '300px');
+  sidenavWidth = computed(() => (this.sidenavCollapsed() ? '52px' : '300px'));
 
   searchTerm = signal('');
 
@@ -107,7 +155,9 @@ export default class SidenavLayoutPageComponent {
     const searchTerm = this.searchTerm().trim().toLowerCase();
     if (!searchTerm) return this.menuItems;
 
-    return this.menuItems.filter(x => x.label.toLowerCase().includes(searchTerm));
+    return this.menuItems.filter((x) =>
+      x.label.toLowerCase().includes(searchTerm),
+    );
   });
 
   onBackdropClick() {
@@ -118,6 +168,10 @@ export default class SidenavLayoutPageComponent {
   toggleSidenavWidth() {
     if (this.sidenavPinned()) return;
     this.sidenavCollapsed.set(false);
+
+    setTimeout(() => {
+      this.searchInput().nativeElement.focus();
+    }, 410);
   }
 
   toggleSidenavPinned() {

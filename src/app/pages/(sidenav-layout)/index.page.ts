@@ -4,7 +4,11 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   imports: [],
   template: `
-  <div class="ml-5 text-blue-500">hello all xd x</div>
+  <div class="ml-5 text-blue-500">
+      <button>
+      sadas
+    </button>
+  </div>
   `,
 })
 export default class Home { }
