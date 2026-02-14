@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-home-page',
   imports: [],
   template: `
-  <div class="ml-5 text-blue-500">hello all xd</div>
+  <div class="ml-5 text-blue-500">hello </div>
   `,
 })
 export default class TodosPageComponent { }

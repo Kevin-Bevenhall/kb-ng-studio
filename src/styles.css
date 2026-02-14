@@ -2,12 +2,14 @@
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css';
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
 @import "@spartan-ng/brain/hlm-tailwind-preset.css";
 
-html,
-body {
-  height: 100%;
-  margin: 0;
+@theme {
+  --color-action: oklch(0.77 0.16 70);
 }
 
 :root {
@@ -88,4 +90,41 @@ body {
 :root {
   --mat-sidenav-container-background-color: var(--sidebar);
   --mat-sidenav-container-shape: 0px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+  height: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
 }
