@@ -8,7 +8,7 @@ import { TodoComponent } from 'src/app/features/todos/todo.component';
   imports: [TodoComponent, RouterOutlet, RouterLinkWithHref, DrawerLayoutComponent],
   template: `
   <app-drawer-layout>
-    <div>Hello all</div>
+    <app-todo />
     <a routerLink="/todos/create">Create todo</a>
   </app-drawer-layout>
   `,

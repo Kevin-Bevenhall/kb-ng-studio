@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
+import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideFilm } from '@ng-icons/lucide';
 import {
@@ -62,7 +62,9 @@ import { LocalStorageService } from '../shared/local-storage.service';
         position="start"
         mode="side"
         [style.width]="sidenavWidth()"
-        class="bg-sidebar h-full transition-all duration-400 ease-in-out overflow-hidden">
+        [style.background-color]="'var(--sidebar)'"
+        [style.border-right]="'1px solid var(--sidebar-border)'"
+        class="h-full transition-all duration-400 ease-in-out overflow-hidden">
         <div
           hlmInputGroup
           class="h-12 overflow-hidden">
@@ -74,31 +76,33 @@ import { LocalStorageService } from '../shared/local-storage.service';
               hlm
               name="matSearchOutline"></ng-icon>
           </button>
-          <input
-            #searchInput
-            type="text"
-            hlmInputGroupInput
-            placeholder="Filter menu items..."
-            [(ngModel)]="searchTerm"
-            class="pl-0" />
-          <button
-            hlmBtn
-            (click)="toggleSidenavPinned()"
-            [hlmTooltip]="sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
-            position="right"
-            class="hover:cursor-pointer mr-[16px] mt-1 hover:bg-accent rounded-full">
-            @if (sidenavPinned()) {
-              <ng-icon
-                hlm
-                name="matCloseOutline"
-                class="text-action"></ng-icon>
-            } @else {
-              <ng-icon
-                hlm
-                name="matPushPinOutline"
-                class="text-action"></ng-icon>
-            }
-          </button>
+          @if (!sidenavCollapsed()) {
+            <input
+              #searchInput
+              type="text"
+              hlmInputGroupInput
+              placeholder="Filter menu items..."
+              [(ngModel)]="searchTerm"
+              class="pl-0" />
+            <button
+              hlmBtn
+              (click)="toggleSidenavPinned()"
+              [hlmTooltip]="sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
+              position="right"
+              class="hover:cursor-pointer mr-[16px] mt-1 hover:bg-accent rounded-full">
+              @if (sidenavPinned()) {
+                <ng-icon
+                  hlm
+                  name="matCloseOutline"
+                  class="text-action"></ng-icon>
+              } @else {
+                <ng-icon
+                  hlm
+                  name="matPushPinOutline"
+                  class="text-action"></ng-icon>
+              }
+            </button>
+          }
         </div>
         <div hlmItemGroup>
           @for (item of filteredMenuItems(); track item.path) {
@@ -134,9 +138,7 @@ import { LocalStorageService } from '../shared/local-storage.service';
       </mat-sidenav>
       <mat-sidenav-content
         (click)="onBackdropClick()"
-        [style.margin-left]="
-          !sidenavCollapsed() && sidenavPinned() ? '300px' : '52px'
-        "
+        [style.margin-left]="!sidenavCollapsed() && sidenavPinned() ? '300px' : '52px'"
         class="transition-all duration-400 ease-in-out">
         <router-outlet />
       </mat-sidenav-content>
@@ -144,7 +146,6 @@ import { LocalStorageService } from '../shared/local-storage.service';
   `,
 })
 export default class SidenavLayoutPageComponent implements OnInit {
-  private router = inject(Router);
   private localStorageService = inject(LocalStorageService);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
@@ -178,7 +179,6 @@ export default class SidenavLayoutPageComponent implements OnInit {
   }
 
   onBackdropClick() {
-    console.log('hello');
     if (this.sidenavPinned()) return;
     this.sidenavCollapsed.set(true);
   }

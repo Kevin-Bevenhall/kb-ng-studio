@@ -6,20 +6,21 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-drawer-layout',
   imports: [MatSidenavModule, RouterOutlet],
   template: `
-    <mat-drawer-container class="h-full block">
+    <mat-drawer-container class="h-full">
       <mat-drawer
         position="end"
         disableClose="true"
         mode="over"
-        class="transition-all duration-400 ease-in-out shadow-xl">
+        [style.border-left]="'1px solid var(--sidebar-border)'"
+        [style.background-color]="'var(--sidebar)'"
+        [style.box-shadow]="'-4px 0 16px rgba(0, 0, 0, 0.3)'"
+        class="transition-all duration-400 ease-in-out">
         <router-outlet
           (activate)="openDrawer()"
           (deactivate)="closeDrawer()"></router-outlet>
       </mat-drawer>
 
-      <mat-drawer-content
-      [style.background-color]="drawerOpen() ? 'var(--muted-foreground)' : ''"
-      class="h-full">
+      <mat-drawer-content>
         <ng-content></ng-content>
       </mat-drawer-content>
     </mat-drawer-container>
