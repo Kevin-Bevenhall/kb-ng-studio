@@ -2,12 +2,13 @@ import {
   Component,
   computed,
   ElementRef,
+  inject,
   signal,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideFilm } from '@ng-icons/lucide';
 import {
@@ -51,13 +52,13 @@ import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
   ],
   template: `
     <mat-sidenav-container
-      (backdropClick)="onBackdropClick()"
+      hasBackdrop="false"
       class="w-full h-full">
       <mat-sidenav
         opened="true"
         disableClose="true"
         position="start"
-        [mode]="sidenavPinned() ? 'side' : 'over'"
+        mode="side"
         [style.width]="sidenavWidth()"
         class="bg-sidebar h-full transition-all duration-400 ease-in-out overflow-hidden">
         <div
@@ -104,6 +105,7 @@ import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
               variant="outline"
               size="sm"
               [routerLink]="item.path"
+              (click)="onNavigation()"
               class="flex flex-nowrap pl-3 overflow-hidden">
               <div
                 hlmItemMedia
@@ -129,18 +131,22 @@ import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
         </div>
       </mat-sidenav>
       <mat-sidenav-content
-        [class.margin-left]="sidenavPinned() ? '300px' : '52px'"
-        class="transition-all duration-400 ease-in-out p-4">
+        (click)="onBackdropClick()"
+        [style.margin-left]="
+          !sidenavCollapsed() && sidenavPinned() ? '300px' : '52px'
+        "
+        class="transition-all duration-400 ease-in-out">
         <router-outlet />
       </mat-sidenav-content>
     </mat-sidenav-container>
   `,
 })
 export default class SidenavLayoutPageComponent {
+  private router = inject(Router);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
-  sidenavCollapsed = signal(false);
-  sidenavPinned = signal(true);
+  sidenavCollapsed = signal(true);
+  sidenavPinned = signal(false);
   sidenavWidth = computed(() => (this.sidenavCollapsed() ? '52px' : '300px'));
 
   searchTerm = signal('');
@@ -161,6 +167,7 @@ export default class SidenavLayoutPageComponent {
   });
 
   onBackdropClick() {
+    console.log('hello');
     if (this.sidenavPinned()) return;
     this.sidenavCollapsed.set(true);
   }
@@ -176,5 +183,15 @@ export default class SidenavLayoutPageComponent {
 
   toggleSidenavPinned() {
     this.sidenavPinned.set(!this.sidenavPinned());
+
+    if (!this.sidenavPinned() && !this.sidenavCollapsed()) {
+      this.sidenavCollapsed.set(true);
+    }
+  }
+
+  onNavigation() {
+    if (!this.sidenavPinned()) {
+      this.sidenavCollapsed.set(true);
+    }
   }
 }
