@@ -3,6 +3,7 @@ import {
   computed,
   ElementRef,
   inject,
+  OnInit,
   signal,
   viewChild,
 } from '@angular/core';
@@ -24,6 +25,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInputGroupImports } from '@spartan-ng/helm/input-group';
 import { HlmItemImports } from '@spartan-ng/helm/item';
 import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
+import { LocalStorageService } from '../shared/local-storage.service';
 
 @Component({
   selector: 'app-sidenav-layout-page',
@@ -84,7 +86,7 @@ import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
             (click)="toggleSidenavPinned()"
             [hlmTooltip]="sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
             position="right"
-            class="hover:cursor-pointer mr-[16px] mt-1">
+            class="hover:cursor-pointer mr-[16px] mt-1 hover:bg-accent rounded-full">
             @if (sidenavPinned()) {
               <ng-icon
                 hlm
@@ -141,8 +143,9 @@ import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
     </mat-sidenav-container>
   `,
 })
-export default class SidenavLayoutPageComponent {
+export default class SidenavLayoutPageComponent implements OnInit {
   private router = inject(Router);
+  private localStorageService = inject(LocalStorageService);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
   sidenavCollapsed = signal(true);
@@ -166,6 +169,14 @@ export default class SidenavLayoutPageComponent {
     );
   });
 
+  ngOnInit(): void {
+    const sidenavState = this.localStorageService.get('sidenavState');
+    if (sidenavState == 'pinned') {
+      this.sidenavCollapsed.set(false);
+      this.sidenavPinned.set(true);
+    }
+  }
+
   onBackdropClick() {
     console.log('hello');
     if (this.sidenavPinned()) return;
@@ -183,6 +194,11 @@ export default class SidenavLayoutPageComponent {
 
   toggleSidenavPinned() {
     this.sidenavPinned.set(!this.sidenavPinned());
+
+    this.localStorageService.set(
+      'sidenavState',
+      this.sidenavPinned() ? 'pinned' : 'collapsed',
+    );
 
     if (!this.sidenavPinned() && !this.sidenavCollapsed()) {
       this.sidenavCollapsed.set(true);

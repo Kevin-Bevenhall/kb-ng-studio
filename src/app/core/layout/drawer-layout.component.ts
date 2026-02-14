@@ -11,14 +11,14 @@ import { RouterOutlet } from '@angular/router';
         position="end"
         disableClose="true"
         mode="over"
-        class="transition-all duration-400 ease-in-out z-1000">
+        class="transition-all duration-400 ease-in-out shadow-xl">
         <router-outlet
           (activate)="openDrawer()"
           (deactivate)="closeDrawer()"></router-outlet>
       </mat-drawer>
 
       <mat-drawer-content
-      [style.opacity]="drawerOpen() ? '50%' : '100%'" 
+      [style.background-color]="drawerOpen() ? 'var(--muted-foreground)' : ''"
       class="h-full">
         <ng-content></ng-content>
       </mat-drawer-content>
