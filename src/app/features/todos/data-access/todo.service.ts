@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, resource, signal } from '@angular/core';
+import { inject, Injectable, resource } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Todo } from 'src/app/shared/models/todo';
 
@@ -11,11 +11,25 @@ export class TodoService {
   private baseUrl = 'api/v1/todos/';
 
   todos = resource({
-    params: () => ({}),
-    loader: ({}) => this.getAll(),
+    loader: () => this.getAllTodos(),
   });
 
-  getAll() {
-    return lastValueFrom(this.http.get<Todo[]>('api/v1/todos'));
+  async getAllTodos() {
+    return lastValueFrom(this.http.get<Todo[]>(this.baseUrl));
+  }
+
+  async getTodoById() {
+    
+  }
+
+  async addTodo() {
+  }
+
+  async deleteTodo() {
+
+  }
+
+  async updateTodo() {
+
   }
 }

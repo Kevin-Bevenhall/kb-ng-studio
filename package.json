@@ -32,6 +32,7 @@
     "@ng-icons/lucide": "^33.1.0",
     "@ng-icons/material-icons": "^33.1.0",
     "@spartan-ng/brain": "^0.0.1-alpha.632",
+    "@supabase/supabase-js": "^2.95.3",
     "@tailwindcss/vite": "^4.1.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

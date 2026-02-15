@@ -9,7 +9,6 @@ import { TodoComponent } from 'src/app/features/todos/todo.component';
   template: `
   <app-drawer-layout>
     <app-todo />
-    <a routerLink="/todos/create">Create todo</a>
   </app-drawer-layout>
   `,
 })

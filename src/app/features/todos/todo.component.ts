@@ -1,25 +1,33 @@
 import { Component, inject } from '@angular/core';
 import { TodoService } from './data-access/todo.service';
+import { Todo } from './../../shared/models/todo';
+import { TodoListComponent } from './ui/todo-list.component';
 
 @Component({
   selector: 'app-todo',
-  imports: [],
+  imports: [TodoListComponent],
   template: `
-    <div>
-      Todo works!
-      <button (click)="test()">fetch</button>
-      <button (click)="update()">update todos</button>
+    <div class="max-w-xl w-full mx-auto min-h-120 bg-card m-4 border border-solid border-sidebar-border rounded-md">
+      <app-todo-list [todos]="todoService.todos.value() ?? []"></app-todo-list>
     </div>
   `,
 })
 export class TodoComponent {
-  private todoService = inject(TodoService);
+  protected todoService = inject(TodoService);
 
-  test() {
-    console.log(this.todoService.todos.value())
+  loadTodos() {
+    console.log(this.todoService.todos.value());
   }
 
-  update() {
-    this.todoService.todos.update((todos) => [...todos? todos : [], { title: 'new', completed: false }] )
+  updateOptimistically() {
+    const newTodo: Todo = {
+      is_completed: false,
+      id: 102,
+      label: 'new todo that was inserted optimistically',
+      created_at: Date.now().toString(),
+    };
+    this.todoService.todos.value.update((prev) => [...(prev ? prev : []), newTodo]);
+
+    console.log(this.todoService.todos.value());
   }
 }

@@ -1,12 +1,4 @@
-import {
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  OnInit,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
@@ -160,14 +152,13 @@ export default class SidenavLayoutPageComponent implements OnInit {
     { label: 'Todos', icon: 'matAssignmentOutline', path: 'todos' },
     { label: 'Boards', icon: 'matDashboardOutline', path: 'boards' },
     { label: 'Movies', icon: 'lucideFilm', path: 'Movies' },
+    { label: 'Sign in', icon: 'matHomeOutline', path: 'sign-in' },
   ];
   filteredMenuItems = computed(() => {
     const searchTerm = this.searchTerm().trim().toLowerCase();
     if (!searchTerm) return this.menuItems;
 
-    return this.menuItems.filter((x) =>
-      x.label.toLowerCase().includes(searchTerm),
-    );
+    return this.menuItems.filter((x) => x.label.toLowerCase().includes(searchTerm));
   });
 
   ngOnInit(): void {
@@ -195,10 +186,7 @@ export default class SidenavLayoutPageComponent implements OnInit {
   toggleSidenavPinned() {
     this.sidenavPinned.set(!this.sidenavPinned());
 
-    this.localStorageService.set(
-      'sidenavState',
-      this.sidenavPinned() ? 'pinned' : 'collapsed',
-    );
+    this.localStorageService.set('sidenavState', this.sidenavPinned() ? 'pinned' : 'collapsed');
 
     if (!this.sidenavPinned() && !this.sidenavCollapsed()) {
       this.sidenavCollapsed.set(true);
