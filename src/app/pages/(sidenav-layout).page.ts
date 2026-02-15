@@ -25,7 +25,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInputGroupImports } from '@spartan-ng/helm/input-group';
 import { HlmItemImports } from '@spartan-ng/helm/item';
 import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
-import { LocalStorageService } from '../shared/local-storage.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-sidenav-layout-page',

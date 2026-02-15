@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { TodoService } from './data-access/todo.service';
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-todo',
@@ -8,14 +7,19 @@ import { lastValueFrom } from 'rxjs';
   template: `
     <div>
       Todo works!
-      <button (click)="getAll()">fetch</button>
+      <button (click)="test()">fetch</button>
+      <button (click)="update()">update todos</button>
     </div>
   `,
 })
 export class TodoComponent {
   private todoService = inject(TodoService);
 
-  async getAll() {
-    await lastValueFrom(this.todoService.getAll()).then((data) => console.log(data))
+  test() {
+    console.log(this.todoService.todos.value())
+  }
+
+  update() {
+    this.todoService.todos.update((todos) => [...todos? todos : [], { title: 'new', completed: false }] )
   }
 }
