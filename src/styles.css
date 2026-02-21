@@ -40,7 +40,8 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   --action: oklch(0.77 0.16 70);
-  --new: oklch(0.63 0.17 149);
+  --success: oklch(0.63 0.17 149);
+  --cta: oklch(0.68 0.15 237);
 }
 
 :root.dark {
@@ -74,12 +75,14 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   --action: oklch(0.77 0.16 70);
-  --new: oklch(0.72 0.19 150)
+  --success: oklch(0.72 0.19 150);
+  --cta: oklch(0.68 0.15 237);
 }
 
 @theme inline {
   --color-action: var(--action);
-  --color-new: var(--new);
+  --color-success: var(--success);
+  --color-cta: var(--cta);
 }
 
 @layer base {
