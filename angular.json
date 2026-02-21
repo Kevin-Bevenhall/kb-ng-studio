@@ -56,7 +56,8 @@
       "type": "component",
       "skipTests": true,
       "inlineTemplate": true,
-      "inlineStyle": true
+      "inlineStyle": true,
+      "flat": true
     },
     "@schematics/angular:directive": {
       "type": "directive",
