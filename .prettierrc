@@ -2,5 +2,6 @@
   "htmlWhitespaceSensitivity": "ignore",
   "singleAttributePerLine": true,
   "bracketSameLine": true,
-  "printWidth": 120
+  "printWidth": 500,
+  "objectWrap": "preserve"
 }

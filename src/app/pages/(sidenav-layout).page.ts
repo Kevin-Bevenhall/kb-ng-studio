@@ -1,49 +1,39 @@
+import { RouteMeta } from '@analogjs/router';
 import { Component, computed, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
+import { Router, RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideFilm } from '@ng-icons/lucide';
-import {
-  matArrowForwardOutline,
-  matAssignmentOutline,
-  matCloseOutline,
-  matDashboardOutline,
-  matHomeOutline,
-  matPushPinOutline,
-  matSearchOutline,
-} from '@ng-icons/material-icons/outline';
+import { matArrowForwardOutline, matAssignmentOutline, matCloseOutline, matDashboardOutline, matHomeOutline, matPushPinOutline, matSearchOutline } from '@ng-icons/material-icons/outline';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInputGroupImports } from '@spartan-ng/helm/input-group';
 import { HlmItemImports } from '@spartan-ng/helm/item';
 import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
+import { AuthService } from '../shared/services/auth.service';
 import { LocalStorageService } from '../shared/services/local-storage.service';
+
+export const routeMeta: RouteMeta = {
+  canActivate: [
+    async () => {
+      const router = inject(Router);
+      const authService = inject(AuthService);
+
+      const { data: { session },} = await authService.supabase.auth.getSession();
+
+      if (session) {
+        return true;
+      } else {
+        return router.navigateByUrl('/sign-in');
+      }
+    },
+  ],
+};
 
 @Component({
   selector: 'app-sidenav-layout-page',
-  imports: [
-    RouterOutlet,
-    MatSidenavModule,
-    NgIcon,
-    HlmIcon,
-    HlmItemImports,
-    HlmInputGroupImports,
-    RouterLinkWithHref,
-    FormsModule,
-    HlmTooltipImports,
-  ],
-  providers: [
-    provideIcons({
-      matHomeOutline,
-      matAssignmentOutline,
-      matDashboardOutline,
-      lucideFilm,
-      matArrowForwardOutline,
-      matSearchOutline,
-      matPushPinOutline,
-      matCloseOutline,
-    }),
-  ],
+  imports: [RouterOutlet, MatSidenavModule, NgIcon, HlmIcon, HlmItemImports, HlmInputGroupImports, RouterLinkWithHref, FormsModule, HlmTooltipImports],
+  providers: [provideIcons({ matHomeOutline, matAssignmentOutline, matDashboardOutline, lucideFilm, matArrowForwardOutline, matSearchOutline, matPushPinOutline, matCloseOutline })],
   template: `
     <mat-sidenav-container
       hasBackdrop="false"

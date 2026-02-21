@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import analog from '@analogjs/platform';
 import tailwindcss from '@tailwindcss/vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -11,13 +12,21 @@ export default defineConfig(({ mode }) => ({
     target: ['es2020'],
   },
   resolve: {
-    mainFields: ['module'],
+    mainFields: ['module']
   },
   plugins: [
     tsconfigPaths(),
     analog({
-      ssr: false
+      ssr: false,
+      prerender: {
+        routes: [],
+      },
+      nitro: {
+        alias: {
+          '@server': resolve(__dirname, 'src/server')
+        }
+      }
     }),
-    tailwindcss()
+    tailwindcss(),
   ],
 }));

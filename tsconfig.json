@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["node"],
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -25,6 +26,8 @@
     "useDefineForClassFields": false,
     "skipLibCheck": true,
     "paths": {
+      "@server/*": ["src/server/*"],
+      "@utils/*": ["src/utils/*"],
       "@spartan-ng/helm/icon": [
         "./libs/ui/icon/src/index.ts"
       ],

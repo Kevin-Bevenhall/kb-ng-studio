@@ -1,37 +1,32 @@
-import { Injectable } from '@angular/core';
-import { AuthChangeEvent, createClient, Session, SupabaseClient, User } from '@supabase/supabase-js';
+import { computed, Injectable, signal } from '@angular/core';
+import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { environment } from 'src/environment';
-import { UserProfile } from '../models/user-profile';
+import { createBrowserClient } from '@supabase/ssr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+  supabase = createBrowserClient(environment.supabaseUrl, environment.supabaseKey);
 
-  async getUser() {
-    const { data, error } = await this.supabase.auth.getUser();
-    return error ? null : data.user;
+  private _currentUser = signal<User | undefined>(undefined);
+  currentUser = computed(() => this._currentUser());
+
+  constructor() {
+    this.supabase.auth.onAuthStateChange((event, session) => {
+      this._currentUser.set(session?.user);
+    });
   }
 
-  getProfile(user: User) {
-    return this.supabase.from('profiles').select(`username, website, avatar_url`).eq('id', user.id).single();
+  async signInWithGoogle() {
+    const { data, error } = await this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+
+    console.log(data);
   }
 
-  authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
-    return this.supabase.auth.onAuthStateChange(callback);
-  }
-
-  signIn(email: string) {
-    return this.supabase.auth.signInWithOtp({ email });
-  }
-
-  updateProfile(profile: UserProfile) {
-    const update = {
-      ...profile,
-      updated_at: new Date(),
-    };
-
-    return this.supabase.from('profiles').upsert(update);
+  signOut() {
+    return this.supabase?.auth.signOut();
   }
 }

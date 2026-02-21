@@ -20,7 +20,8 @@ import { RouterOutlet } from '@angular/router';
           (deactivate)="closeDrawer()"></router-outlet>
       </mat-drawer>
 
-      <mat-drawer-content>
+      <mat-drawer-content class="p-4"
+      [style.opacity]="drawerOpen() ? '50%' : '100%'">
         <ng-content></ng-content>
       </mat-drawer-content>
     </mat-drawer-container>

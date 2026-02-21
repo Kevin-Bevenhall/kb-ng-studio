@@ -1,33 +1,32 @@
 import { Component, inject } from '@angular/core';
 import { TodoService } from './data-access/todo.service';
-import { Todo } from './../../shared/models/todo';
 import { TodoListComponent } from './ui/todo-list.component';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo',
-  imports: [TodoListComponent],
+  imports: [TodoListComponent, HlmButtonImports],
   template: `
-    <div class="max-w-xl w-full mx-auto min-h-120 bg-card m-4 border border-solid border-sidebar-border rounded-md">
-      <app-todo-list [todos]="todoService.todos.value() ?? []"></app-todo-list>
+    <div class="max-w-xl mx-auto bg-card border border-solid border-sidebar-border rounded-md max-h-160 h-full">
+      @if (todoService.todos.hasValue()) {
+        <app-todo-list [todos]="todoService.todos.value()"></app-todo-list>
+        <button
+          hlmBtn
+          variant="default"
+          (click)="navigateToCreate()">
+          New todo
+        </button>
+      }
     </div>
   `,
 })
 export class TodoComponent {
   protected todoService = inject(TodoService);
+  private router = inject(Router);
 
-  loadTodos() {
-    console.log(this.todoService.todos.value());
-  }
-
-  updateOptimistically() {
-    const newTodo: Todo = {
-      is_completed: false,
-      id: 102,
-      label: 'new todo that was inserted optimistically',
-      created_at: Date.now().toString(),
-    };
-    this.todoService.todos.value.update((prev) => [...(prev ? prev : []), newTodo]);
-
-    console.log(this.todoService.todos.value());
+  navigateToCreate() {
+    //this.router.navigateByUrl('/todos/create');
+    this.todoService.addTodo('heya');
   }
 }

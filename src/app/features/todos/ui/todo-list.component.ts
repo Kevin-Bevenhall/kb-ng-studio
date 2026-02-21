@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { HlmItemImports } from '@spartan-ng/helm/item';
 import { HlmSeparatorImports } from '@spartan-ng/helm/separator';
@@ -5,13 +6,15 @@ import { Todo } from 'src/app/shared/models/todo';
 
 @Component({
   selector: 'app-todo-list',
-  imports: [HlmItemImports, HlmSeparatorImports],
+  imports: [HlmItemImports, HlmSeparatorImports, CommonModule],
   template: `
     <div hlmItemGroup>
       @for (todo of todos(); track todo.id) {
-        <div hlmItem size="sm">
+        <div
+          hlmItem
+          size="sm">
           <div hlmItemContent>
-            <div hlmItemTitle> {{ todo.label }} </div>
+            <div hlmItemTitle>{{ todo.title }}</div>
           </div>
         </div>
         <hlm-separator></hlm-separator>
