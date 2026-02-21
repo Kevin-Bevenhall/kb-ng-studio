@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
@@ -9,7 +9,7 @@ import { HlmIcon } from '@spartan-ng/helm/icon';
 import { HlmInputGroupImports } from '@spartan-ng/helm/input-group';
 import { HlmItemImports } from '@spartan-ng/helm/item';
 import { HlmTooltipImports } from '@spartan-ng/helm/tooltip';
-import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { SidenavService } from './sidenav.service';
 
 @Component({
   selector: 'app-sidenav-layout',
@@ -24,7 +24,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
         disableClose="true"
         position="start"
         mode="side"
-        [style.width]="sidenavWidth()"
+        [style.width]="sidenavService.sidenavWidth()"
         [style.background-color]="'var(--sidebar)'"
         [style.border-right]="'1px solid var(--sidebar-border)'"
         class="h-full transition-all duration-400 ease-in-out overflow-hidden">
@@ -39,7 +39,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
               hlm
               name="matSearchOutline"></ng-icon>
           </button>
-          @if (!sidenavCollapsed()) {
+          @if (!sidenavService.sidenavCollapsed()) {
             <input
               #searchInput
               type="text"
@@ -49,11 +49,11 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
               class="pl-0" />
             <button
               hlmBtn
-              (click)="toggleSidenavPinned()"
-              [hlmTooltip]="sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
+              (click)="sidenavService.toggleSidenavPinned()"
+              [hlmTooltip]="sidenavService.sidenavPinned() ? 'Unpin menu' : 'Pin menu'"
               position="right"
               class="hover:cursor-pointer mr-[16px] mt-1 hover:bg-accent rounded-full">
-              @if (sidenavPinned()) {
+              @if (sidenavService.sidenavPinned()) {
                 <ng-icon
                   hlm
                   name="matCloseOutline"
@@ -74,18 +74,18 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
               variant="outline"
               size="sm"
               [routerLink]="item.path"
-              (click)="onNavigation()"
+              (click)="sidenavService.onNavigation()"
               class="flex flex-nowrap pl-3 overflow-hidden">
               <div
                 hlmItemMedia
                 [hlmTooltip]="item.label"
                 position="right"
-                [tooltipDisabled]="!sidenavCollapsed()">
+                [tooltipDisabled]="!sidenavService.sidenavCollapsed()">
                 <ng-icon
                   hlm
                   [name]="item.icon"></ng-icon>
               </div>
-              @if (!sidenavCollapsed()) {
+              @if (!sidenavService.sidenavCollapsed()) {
                 <div hlmItemContent>
                   <div hlmItemTitle>{{ item.label }}</div>
                 </div>
@@ -100,22 +100,17 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
         </div>
       </mat-sidenav>
       <mat-sidenav-content
-        (click)="onBackdropClick()"
-        [style.margin-left]="!sidenavCollapsed() && sidenavPinned() ? '300px' : '52px'"
+        (click)="sidenavService.onBackdropClick()"
+        [style.margin-left]="!sidenavService.sidenavCollapsed() && sidenavService.sidenavPinned() ? '300px' : '52px'"
         class="transition-all duration-400 ease-in-out">
         <router-outlet />
       </mat-sidenav-content>
     </mat-sidenav-container>
   `,
 })
-export default class SidenavLayoutComponent implements OnInit {
-  private localStorageService = inject(LocalStorageService);
+export default class SidenavLayoutComponent {
+  protected sidenavService = inject(SidenavService);
   searchInput = viewChild.required<ElementRef>('searchInput');
-
-  sidenavCollapsed = signal(true);
-  sidenavPinned = signal(false);
-  sidenavWidth = computed(() => (this.sidenavCollapsed() ? '52px' : '300px'));
-
   searchTerm = signal('');
 
   menuItems = [
@@ -132,41 +127,11 @@ export default class SidenavLayoutComponent implements OnInit {
     return this.menuItems.filter((x) => x.label.toLowerCase().includes(searchTerm));
   });
 
-  ngOnInit(): void {
-    const sidenavState = this.localStorageService.get('sidenavState');
-    if (sidenavState == 'pinned') {
-      this.sidenavCollapsed.set(false);
-      this.sidenavPinned.set(true);
-    }
-  }
-
-  onBackdropClick() {
-    if (this.sidenavPinned()) return;
-    this.sidenavCollapsed.set(true);
-  }
-
   toggleSidenavWidth() {
-    if (this.sidenavPinned()) return;
-    this.sidenavCollapsed.set(false);
+    this.sidenavService.toggleSidenavWidth();
 
     setTimeout(() => {
       this.searchInput().nativeElement.focus();
     }, 410);
-  }
-
-  toggleSidenavPinned() {
-    this.sidenavPinned.set(!this.sidenavPinned());
-
-    this.localStorageService.set('sidenavState', this.sidenavPinned() ? 'pinned' : 'collapsed');
-
-    if (!this.sidenavPinned() && !this.sidenavCollapsed()) {
-      this.sidenavCollapsed.set(true);
-    }
-  }
-
-  onNavigation() {
-    if (!this.sidenavPinned()) {
-      this.sidenavCollapsed.set(true);
-    }
   }
 }
