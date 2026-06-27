@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { ButtonComponent } from '../core/ui/button/button.component';
 
 @Component({
   selector: 'app-home',
-  imports: [ButtonComponent],
-  template: `
-  <div>
-    <kb-button>Create todo</kb-button>
-  </div>`,
+  imports: [],
+  template: ``,
 })
-export default class Home { }
+export default class Home {
+}
