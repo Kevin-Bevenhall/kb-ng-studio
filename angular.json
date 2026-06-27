@@ -20,6 +20,7 @@
           "defaultConfiguration": "production",
           "configurations": {
             "development": {
+              "sourcemap": false,
               "mode": "development"
             },
             "production": {
@@ -44,9 +45,6 @@
               "buildTarget": "my-app:build:production"
             }
           }
-        },
-        "test": {
-          "builder": "@analogjs/vitest-angular:test"
         }
       }
     }

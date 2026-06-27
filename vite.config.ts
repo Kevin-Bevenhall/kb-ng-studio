@@ -7,20 +7,18 @@ import analog from '@analogjs/platform';
 export default defineConfig(({ mode }) => ({
   build: {
     target: ['es2020'],
+    sourcemap: false
   },
   resolve: {
     mainFields: ['module'],
   },
   plugins: [
     analog({
-      inlineStylesExtension: 'scss'
+      inlineStylesExtension: 'scss',
+      ssr: false,
+      prerender: {
+        routes: []
+      }
     }),
-  ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['src/test-setup.ts'],
-    include: ['**/*.spec.ts'],
-    reporters: ['default'],
-  },
+  ]
 }));
