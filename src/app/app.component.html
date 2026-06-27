@@ -3,9 +3,7 @@
 @if (session === undefined) {
   <div>Loading..</div>
 } @else if(session === null) {
-  <div> router outleta </div>
-    <button matButton (click)="test()"></button>
+  <router-outlet></router-outlet>
 } @else {
-  <div>signed in!</div>
-  <button matButton (click)="test()"></button>
+  <router-outlet></router-outlet>
 }
