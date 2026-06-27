@@ -18,7 +18,7 @@ export class SidenavLayoutComponent implements OnInit {
   private localStorageService = inject(LocalStorageService);
 
   isSidenavExpanded = signal(false);
-  sidenavControl = signal<'expanded' | 'collapsed' | 'hover'>('collapsed');
+  sidenavControl = signal<'expanded' | 'collapsed' | 'hover'>('hover');
 
   menuItems = [
     {
