@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-
-import { AnalogWelcome } from './analog-welcome';
+import { ButtonComponent } from '../core/ui/button/button.component';
 
 @Component({
   selector: 'app-home',
-  imports: [AnalogWelcome],
+  imports: [ButtonComponent],
   template: `
-     <app-analog-welcome/>
-  `,
+  <div>
+    <kb-button>heys</kb-button>
+  </div>`,
 })
-export default class Home {}
+export default class Home { }
