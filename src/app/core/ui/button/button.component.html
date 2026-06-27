@@ -1,3 +1,7 @@
-<button>
+<button #btn [disabled]="disabled()">
+  @if (loading()) {
+  loading...
+  } @else {
   <ng-content></ng-content>
+  }
 </button>

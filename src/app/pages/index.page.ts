@@ -6,7 +6,7 @@ import { ButtonComponent } from '../core/ui/button/button.component';
   imports: [ButtonComponent],
   template: `
   <div>
-    <kb-button>heys</kb-button>
+    <kb-button>Create todo</kb-button>
   </div>`,
 })
 export default class Home { }

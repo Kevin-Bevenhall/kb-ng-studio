@@ -1,0 +1,17 @@
+button {
+  user-select: none;
+  font-size:20px;
+  padding: 10px 30px 10px 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color-primary);
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--color-primary-ripple);
+}
+
+button.danger {
+  background-color: var(--color-danger);
+}
