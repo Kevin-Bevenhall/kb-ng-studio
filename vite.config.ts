@@ -12,7 +12,9 @@ export default defineConfig(({ mode }) => ({
     mainFields: ['module'],
   },
   plugins: [
-    analog(),
+    analog({
+      inlineStylesExtension: 'scss'
+    }),
   ],
   test: {
     globals: true,
