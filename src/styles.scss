@@ -1,9 +1,16 @@
 @use '@angular/material' as mat;
 
 html {
+  height: 100%;
   color-scheme: light dark;
   @include mat.theme((typography: Roboto,
       density: -3))
+}
+
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .red-palette {

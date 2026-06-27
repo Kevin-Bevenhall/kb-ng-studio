@@ -1,9 +1,11 @@
 @let session = authService.session();
 
 @if (session === undefined) {
-  <div>Loading..</div>
+<div>Loading..</div>
 } @else if(session === null) {
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 } @else {
+<app-sidenav-layout>
   <router-outlet></router-outlet>
+</app-sidenav-layout>
 }

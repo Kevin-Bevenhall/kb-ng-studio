@@ -4,10 +4,11 @@ import { RouterOutlet } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { PaletteEnum, ThemeService } from './shared/services/theme.service';
+import { SidenavLayoutComponent } from './core/layout/sidenav-layout/sidenav-layout.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatButtonModule],
+  imports: [RouterOutlet, MatButtonModule, SidenavLayoutComponent],
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {

@@ -1,1 +1,38 @@
-<p>sidenav-layout works!</p>
+<mat-sidenav-container>
+
+  <mat-sidenav opened mode="side" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
+    [class.expanded]="isSidenavExpanded() && sidenavControl() !== 'collapsed'">
+    <div class="mat-sidenav-items">
+      <mat-nav-list>
+        @for (item of menuItems; track $index) {
+        <a mat-list-item #rla="routerLinkActive" routerLinkActive [activated]="rla.isActive" [routerLink]="item.path">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          @if (isSidenavExpanded()) {
+          <span matListItemTitle>{{ item.caption }}</span>
+          }
+        </a>
+        }
+      </mat-nav-list>
+
+      <button class="sidenav-control-button" matIconButton [matMenuTriggerFor]="menu" matTooltip="Sidenav control">
+        <mat-icon>compare</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        @for (item of sidenavControlItems; track $index) {
+        <button mat-menu-item (click)="onSidenavControlClick(item.control)">
+          <mat-icon [style.font-size.px]="12" [style.width.px]="12" [style.height.px]="12" [style.line-height.px]="12"
+            [style.visibility]="sidenavControl() === item.control ? 'visible' : 'hidden'">lens</mat-icon>
+          <span>{{ item.caption }}</span>
+        </button>
+        }
+      </mat-menu>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content [style.margin-left]="sidenavControl() === 'expanded' ? '250px' : '50px'">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
