@@ -1,2 +1,11 @@
-<div>yo assdsaadsadsads</div>
-<button matButton="filled" (click)="setMockKey()">Azure</button>
+@let session = authService.session();
+
+@if (session === undefined) {
+  <div>Loading..</div>
+} @else if(session === null) {
+  <div> router outleta </div>
+    <button matButton (click)="test()"></button>
+} @else {
+  <div>signed in!</div>
+  <button matButton (click)="test()"></button>
+}

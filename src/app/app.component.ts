@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './shared/services/auth.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { PaletteEnum, ThemeService } from './shared/services/theme.service';
 
@@ -11,6 +12,7 @@ import { PaletteEnum, ThemeService } from './shared/services/theme.service';
 })
 export class AppComponent implements OnInit {
   protected themeService = inject(ThemeService);
+  protected authService = inject(AuthService);
   private localStorageService = inject(LocalStorageService);
 
   ngOnInit(): void {
@@ -21,7 +23,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  setMockKey() {
-    this.localStorageService.setItem('palette', 'xdd');
+  test() {
+    this.authService.signIn()
   }
 }
