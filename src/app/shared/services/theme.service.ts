@@ -1,4 +1,5 @@
-import { Service } from '@angular/core';
+import { inject, Service } from '@angular/core';
+import { LocalStorageService } from './local-storage.service';
 
 export enum PaletteEnum {
   Red = 'red-palette',
@@ -17,11 +18,13 @@ export enum PaletteEnum {
 
 @Service()
 export class ThemeService {
+  private localStorageService = inject(LocalStorageService);
 
   setTheme(palette: PaletteEnum) {
     const html = document.documentElement;
 
     html.classList.remove(...Object.values(PaletteEnum));
     html.classList.add(palette);
+    this.localStorageService.setItem('palette', palette);
   }
 }
