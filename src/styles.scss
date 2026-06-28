@@ -1,16 +1,23 @@
 @use '@angular/material' as mat;
+@use 'styles/button-overrides.scss' as button-overrides;
+@use 'styles/custom-tokens.scss' as custom-tokens;
+
 
 html {
   height: 100%;
-  color-scheme: light dark;
-  @include mat.theme((typography: Roboto,
-      density: -3))
+  color-scheme: light;
+  @include mat.theme((typography: Roboto, density: -0));
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font: var(--mat-sys-body-medium);
 }
 
 .red-palette {
@@ -50,7 +57,7 @@ body {
 }
 
 .azure-palette {
-  @include mat.theme((color: mat.$azure-palette));
+  @include mat.theme((color: (primary: mat.$azure-palette, tertiary: mat.$blue-palette)));
 }
 
 .violet-palette {

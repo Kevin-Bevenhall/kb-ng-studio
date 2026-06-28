@@ -1,0 +1,21 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.button-overrides((
+    filled-container-shape: var(--mat-sys-corner-extra-small)
+    ))
+}
+
+.error {
+  @include mat.button-overrides((
+    filled-container-color: var(--mat-sys-error),
+    filled-label-text-color: var(--mat-sys-on-error)
+    ))
+}
+
+.create {
+  @include mat.button-overrides((
+    filled-container-color: var(--sys-success),
+    filled-label-text-color: var(--sys-on-success)
+    ))
+}

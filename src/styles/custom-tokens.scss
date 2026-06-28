@@ -1,0 +1,9 @@
+:root {
+  --sys-success: oklch(0.63 0.17 149); // green 600
+  --sys-on-success: oklch(0.99 0.00 0); // neutral 50
+}
+
+:root.dark {
+  --sys-success: oklch(0.63 0.17 149); // green 600
+  --sys-on-success: oklch(0.27 0.06 153); // green 950
+}
