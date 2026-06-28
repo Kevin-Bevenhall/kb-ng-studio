@@ -18,6 +18,7 @@ export class SidenavLayoutComponent implements OnInit {
   private localStorageService = inject(LocalStorageService);
 
   isSidenavExpanded = signal(false);
+  isMenuOpen = signal(false);
   sidenavControl = signal<'expanded' | 'collapsed' | 'hover'>('hover');
 
   menuItems = [
@@ -60,12 +61,15 @@ export class SidenavLayoutComponent implements OnInit {
   }
 
   onMouseEnter() {
-    this.isSidenavExpanded.set(true);
+    if (this.sidenavControl() !== 'collapsed') {
+      this.isSidenavExpanded.set(true);
+    }
   }
 
   onMouseLeave() {
-    if (this.sidenavControl() === 'expanded') return;
-    this.isSidenavExpanded.set(false);
+    if (this.sidenavControl() !== 'expanded' && !this.isMenuOpen()) {
+      this.isSidenavExpanded.set(false);
+    }
   }
 
   onSidenavControlClick(control: 'expanded' | 'collapsed' | 'hover') {
@@ -75,5 +79,13 @@ export class SidenavLayoutComponent implements OnInit {
     if (control === 'expanded') {
       this.isSidenavExpanded.set(true);
     }
+  }
+
+  onMenuOpened() {
+    this.isMenuOpen.set(true);
+  }
+
+  onMenuClosed() {
+    this.isMenuOpen.set(false);
   }
 }

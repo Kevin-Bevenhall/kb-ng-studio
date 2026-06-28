@@ -14,7 +14,7 @@
         }
       </mat-nav-list>
 
-      <button class="sidenav-control-button" matIconButton [matMenuTriggerFor]="menu" matTooltip="Sidenav control">
+      <button class="sidenav-control-button" matIconButton [matMenuTriggerFor]="menu" matTooltip="Sidenav control" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
         <mat-icon>compare</mat-icon>
       </button>
 
@@ -32,7 +32,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content [style.margin-left]="sidenavControl() === 'expanded' ? '250px' : '50px'">
-    <ng-content></ng-content>
+    <ng-content />
   </mat-sidenav-content>
 
 </mat-sidenav-container>
