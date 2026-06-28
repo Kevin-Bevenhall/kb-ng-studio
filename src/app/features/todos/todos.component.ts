@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-todos',
@@ -8,11 +9,21 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './todos.component.scss',
 })
 export class TodosComponent {
+  private authService = inject(AuthService);
+
   fetch() {
     fetch('/api/v1/todos', { credentials: 'include' }).then(res => res.json().then(data => console.log(data)))
   }
 
   fetch2() {
-     fetch('/api/v1/profiles', { credentials: 'include' }).then(res => res.json().then(data => console.log(data)))
+    fetch('/api/v1/profiles', { credentials: 'include' }).then(res => res.json().then(data => console.log(data)))
+  }
+
+  signIn() {
+    this.authService.signIn()
+  }
+
+  signOut() {
+    this.authService.signOut()
   }
 }

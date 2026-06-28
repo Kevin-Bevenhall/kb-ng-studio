@@ -7,7 +7,7 @@ import { provideRouter, withViewTransitions } from '@angular/router';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    //provideFileRouter(withExtraRoutes(routes)),
+    provideFileRouter(),
     provideRouter(routes, withViewTransitions()),
     provideHttpClient(
       withInterceptors([requestContextInterceptor])

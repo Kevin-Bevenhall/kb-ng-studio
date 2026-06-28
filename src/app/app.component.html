@@ -1,5 +1,6 @@
 @let session = authService.session();
 
+@if (applicationStarted()) {
 @if (session === undefined) {
 <div>Loading..</div>
 } @else if(session === null) {
@@ -8,4 +9,5 @@
 <app-sidenav-layout>
   <router-outlet></router-outlet>
 </app-sidenav-layout>
+}
 }

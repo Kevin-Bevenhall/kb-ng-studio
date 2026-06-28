@@ -1,10 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterOutlet } from '@angular/router';
-import { AuthService } from './shared/services/auth.service';
-import { LocalStorageService } from './shared/services/local-storage.service';
-import { PaletteEnum, ThemeService } from './shared/services/theme.service';
+import { Router, RouterOutlet } from '@angular/router';
+import { filter, firstValueFrom } from 'rxjs';
 import { SidenavLayoutComponent } from './core/layout/sidenav-layout/sidenav-layout.component';
+import { AuthService } from './shared/services/auth.service';
+import { ProfileService } from './shared/services/profile.service';
+import { ThemeService } from './shared/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -14,17 +16,41 @@ import { SidenavLayoutComponent } from './core/layout/sidenav-layout/sidenav-lay
 export class AppComponent implements OnInit {
   protected themeService = inject(ThemeService);
   protected authService = inject(AuthService);
-  private localStorageService = inject(LocalStorageService);
+  protected profileService = inject(ProfileService);
+  private router = inject(Router);
 
-  ngOnInit(): void {
-    const theme = this.localStorageService.getItem('palette') as PaletteEnum;
+  private session$ = toObservable(this.authService.session);
 
-    if (theme && Object.values(PaletteEnum).includes(theme as PaletteEnum)) {
-      this.themeService.setTheme(theme);
-    }
+  applicationStarted = signal(false);
+  applicationStartFailed = signal(false);
+
+  constructor() {
+    effect(() => {
+      const session = this.authService.session();
+
+      if (this.applicationStarted() && !session) {
+        this.router.navigate(['/sign-in']);
+      }
+    })
   }
 
-  test() {
-    this.authService.signIn()
+  ngOnInit(): void {
+    this.startApplication();
+  }
+
+  async startApplication() {
+    const session = await firstValueFrom(this.session$.pipe(
+      filter(session => session !== undefined)
+    ));
+
+    if (session) {
+      try {
+        await this.profileService.getProfile();
+      } catch (error) {
+        this.applicationStartFailed.set(true);
+      }
+    }
+
+    this.applicationStarted.set(true);
   }
 }
