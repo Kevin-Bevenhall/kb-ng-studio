@@ -29,6 +29,7 @@
     "@angular/router": "^22.0.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
+    "@tanstack/angular-query-experimental": "^5.101.2",
     "front-matter": "^4.0.2",
     "marked": "^15.0.7",
     "marked-gfm-heading-id": "^4.1.1",
