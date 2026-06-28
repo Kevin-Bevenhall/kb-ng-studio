@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { TodoService } from 'src/app/shared/services/todo.service';
 
 @Component({
   selector: 'app-todo-detail',
@@ -7,5 +8,12 @@ import { Component, input } from '@angular/core';
   styleUrl: './todo-detail.component.scss',
 })
 export class TodoDetailComponent {
+  private todoService = inject(TodoService);
+
   todoId = input.required<string>();
+
+  async test() {
+    const data = await this.todoService.getById('7');
+    console.log(data)
+  }
 }
