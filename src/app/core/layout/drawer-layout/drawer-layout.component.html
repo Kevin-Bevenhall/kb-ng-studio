@@ -1,0 +1,11 @@
+<mat-drawer-container hasBackdrop="false">
+
+  <mat-drawer position="end" disableClose="true" mode="over" >
+    <router-outlet (activate)="onActivate()" (deactivate)="onDeactivate()"></router-outlet>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <router-outlet name="content"></router-outlet>
+  </mat-drawer-content>
+
+</mat-drawer-container>

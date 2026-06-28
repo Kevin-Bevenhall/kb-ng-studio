@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'todos',
-    loadComponent: () => import('./features/todos/todos.component').then(m => m.TodosComponent),
+    loadChildren: () => import('./features/todos/todos.routes').then(m => m.todosRoutes),
     canActivate: [AuthGuard]
   }
 ]

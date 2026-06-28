@@ -1,0 +1,12 @@
+mat-drawer-container {
+  height: 100%;
+
+  mat-drawer {
+    border-radius: 0px;
+    border-left: 1px solid black;
+  }
+
+  mat-drawer-content {
+    height: 100%;
+  }
+}
