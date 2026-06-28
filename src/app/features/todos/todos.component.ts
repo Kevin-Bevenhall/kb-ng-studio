@@ -11,4 +11,8 @@ export class TodosComponent {
   fetch() {
     fetch('/api/v1/todos', { credentials: 'include' }).then(res => res.json().then(data => console.log(data)))
   }
+
+  fetch2() {
+     fetch('/api/v1/profiles', { credentials: 'include' }).then(res => res.json().then(data => console.log(data)))
+  }
 }
