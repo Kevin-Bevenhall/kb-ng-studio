@@ -13,7 +13,7 @@ export class TodoDetailComponent {
   todoId = input.required<string>();
 
   async test() {
-    const data = await this.todoService.getById('7');
+    const data = await this.todoService.getById('20');
     console.log(data)
   }
 }

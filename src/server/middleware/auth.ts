@@ -1,6 +1,6 @@
 import { ServerRequest, ServerResponse } from "@analogjs/router/tokens";
 import { SupabaseClient, User } from "@supabase/supabase-js";
-import { defineEventHandler, H3Event } from 'h3';
+import { createError, defineEventHandler, H3Event } from 'h3';
 import { createClient } from "../supabase";
 
 declare module 'h3' {
@@ -17,4 +17,8 @@ export default defineEventHandler(async (event: H3Event) => {
 
   event.context.supabase = client;
   event.context.user = data.user ?? null;
+
+  if (!event.context.user) {
+    throw createError({ statusCode: 401, message: 'Unauthorized' });
+  }
 })
