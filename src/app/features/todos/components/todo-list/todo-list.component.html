@@ -1,10 +1,5 @@
-<div>
-  <mat-form-field>
-    <mat-label>{{ 'Theme' | transloco }}</mat-label>
-    <mat-select (selectionChange)="onSelectionChange($event)" [value]="currentPalette()">
-      @for (palette of palettes; track palette) {
-        <mat-option [value]="palette.value">{{ palette.key | transloco}}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-</div>
+<mat-selection-list #todos>
+  @for (todo of todosQuery.data(); track todo.id) {
+  <mat-list-option>{{ todo.name }}</mat-list-option>
+  }
+</mat-selection-list>

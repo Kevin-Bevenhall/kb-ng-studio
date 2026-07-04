@@ -1,4 +1,7 @@
-div {
-  width: 200px;
-  margin: 100px auto;
+mat-selection-list {
+  max-width: 600px;
+  height: 100%;
+  padding: 0px;
+  margin: auto;
+  background-color: var(--mat-sys-primary-fixed);
 }
