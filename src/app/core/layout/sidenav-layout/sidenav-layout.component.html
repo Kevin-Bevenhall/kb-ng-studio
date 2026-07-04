@@ -8,7 +8,7 @@
         <a mat-list-item #rla="routerLinkActive" routerLinkActive [activated]="rla.isActive" [routerLink]="item.path">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           @if (isSidenavExpanded()) {
-          <span matListItemTitle>{{ item.caption }}</span>
+          <span matListItemTitle>{{ item.caption | transloco }}</span>
           }
         </a>
         }

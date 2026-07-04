@@ -6,16 +6,18 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-sidenav-layout',
-  imports: [MatSidenavModule, MatListModule, MatIconModule, RouterLinkActive, RouterLinkWithHref, MatMenuModule, MatButtonModule, MatTooltipModule],
+  imports: [MatSidenavModule, MatListModule, MatIconModule, RouterLinkActive, RouterLinkWithHref, MatMenuModule, MatButtonModule, MatTooltipModule, TranslocoPipe],
   templateUrl: './sidenav-layout.component.html',
   styleUrl: './sidenav-layout.component.scss',
 })
 export class SidenavLayoutComponent implements OnInit {
   private localStorageService = inject(LocalStorageService);
+  private translocoService = inject(TranslocoService);
 
   isSidenavExpanded = signal(false);
   isMenuOpen = signal(false);
