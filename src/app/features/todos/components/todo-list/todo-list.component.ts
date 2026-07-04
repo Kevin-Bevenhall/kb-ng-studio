@@ -32,6 +32,7 @@ export class TodoListComponent implements OnInit {
 
   onSelectionChange(event: MatSelectChange) {
     console.log(event)
+    this.themeService.setTheme(event.value);
     this.profileService.updateProfile({ palette: event.value });
   }
 }

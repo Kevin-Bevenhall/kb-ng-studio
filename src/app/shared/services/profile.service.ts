@@ -16,9 +16,8 @@ export class ProfileService {
 
   async getProfile() {
     const profile = await firstValueFrom(this.http.get<Profile>(this.baseQueryUrl));
-    if (profile) {
-      this._profile.set(profile);
-    }
+    this._profile.set(profile);
+    return profile;
   }
 
   private setProfile(profile: Profile) {
@@ -27,14 +26,8 @@ export class ProfileService {
 
   async updateProfile(body: Partial<Profile>) {
     try {
-      const prevProfile = this._profile();
-
       const profile = await firstValueFrom(this.http.put<Profile>(this.baseQueryUrl, body));
       this.setProfile(profile);
-
-      if (profile.palette !== prevProfile?.palette) {
-        this.themeService.setTheme(profile.palette);
-      }
     } catch (error) {
       throw new Error(`${error}`);
     }

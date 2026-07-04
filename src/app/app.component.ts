@@ -14,12 +14,12 @@ import { ThemeService } from './shared/services/theme.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
-  protected themeService = inject(ThemeService);
   protected authService = inject(AuthService);
-  protected profileService = inject(ProfileService);
+  private themeService = inject(ThemeService);
+  private profileService = inject(ProfileService);
   private router = inject(Router);
 
-  private session$ = toObservable(this.authService.session);
+  session$ = toObservable(this.authService.session);
 
   applicationStarted = signal(false);
   applicationStartFailed = signal(false);
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   constructor() {
     effect(() => {
       const session = this.authService.session();
-
+      
       if (this.applicationStarted() && !session) {
         this.router.navigate(['/sign-in']);
       }
@@ -45,7 +45,8 @@ export class AppComponent implements OnInit {
 
     if (session) {
       try {
-        await this.profileService.getProfile();
+        const profile = await this.profileService.getProfile();
+        this.themeService.setTheme(profile.palette);
       } catch (error) {
         this.applicationStartFailed.set(true);
       }
