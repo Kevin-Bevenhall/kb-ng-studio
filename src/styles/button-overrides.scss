@@ -2,7 +2,6 @@
 
 :root {
   @include mat.button-overrides((
-    filled-container-shape: var(--mat-sys-corner-extra-small)
     ))
 }
 

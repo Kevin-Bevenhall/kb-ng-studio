@@ -2,7 +2,6 @@ import { Service } from '@angular/core';
 
 @Service()
 export class LocalStorageService {
-
   setItem(key: string, value: string) {
     localStorage.setItem(key, value);
   }

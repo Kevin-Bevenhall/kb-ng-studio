@@ -1,12 +1,14 @@
 @use '@angular/material' as mat;
 @use 'styles/button-overrides.scss' as button-overrides;
 @use 'styles/custom-tokens.scss' as custom-tokens;
+@use './styles/list-overrides.scss' as list-overrides;
 
 
 html {
   height: 100%;
   color-scheme: light;
-  @include mat.theme((typography: Roboto, density: -1));
+  @include mat.theme((typography: Roboto, density: 0));
+  @include mat.strong-focus-indicators();
 }
 
 html.dark {

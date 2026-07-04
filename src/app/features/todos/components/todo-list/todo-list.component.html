@@ -1,1 +1,10 @@
-<button (click)="test()">check</button>
+<div>
+  <mat-form-field>
+    <mat-label>Theme</mat-label>
+    <mat-select (selectionChange)="onSelectionChange($event)" [value]="currentPalette()">
+      @for (palette of palettes; track palette) {
+        <mat-option [value]="palette.value">{{ palette.key }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
