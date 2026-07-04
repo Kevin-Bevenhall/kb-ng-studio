@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 import { PaletteEnum, ThemeService } from 'src/app/shared/services/theme.service';
 import { TodoService } from 'src/app/shared/services/todo.service';
@@ -12,7 +13,7 @@ import { EnumDataSourceItem, getEnumDataSource } from 'src/app/shared/utils/get-
 
 @Component({
   selector: 'app-todo-list',
-  imports: [MatButtonModule, MatSelectModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule],
+  imports: [MatButtonModule, MatSelectModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, TranslocoPipe],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss',
 })

@@ -1,4 +1,22 @@
 {
   "Home": "Home",
-  "Todos": "Todos"
+  "Theme": "Theme",
+  "Todos": "Todos",
+  "SidenavControl": "Sidenav control",
+  "Expanded": "Expanded",
+  "Collapsed": "Collapsed",
+  "ExpandOnHover": "Expand on hover",
+
+  "Red": "Red",
+  "Green": "Green",
+  "Blue": "Blue",
+  "Yellow": "Yellow",
+  "Cyan": "Cyan",
+  "Magenta": "Magenta",
+  "Orange": "Orange",
+  "Chartreuse": "Chartreuse",
+  "SpringGreen": "Spring green",
+  "Azure": "Azure",
+  "Violet": "Violet",
+  "Rose": "Rose"
 }

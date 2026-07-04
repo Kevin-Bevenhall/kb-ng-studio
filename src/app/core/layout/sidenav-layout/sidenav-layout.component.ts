@@ -46,7 +46,7 @@ export class SidenavLayoutComponent implements OnInit {
       control: 'collapsed'
     },
     {
-      caption: 'Expand on hover',
+      caption: 'ExpandOnHover',
       control: 'hover'
     }
   ] as const;

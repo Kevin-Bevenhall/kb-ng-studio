@@ -14,7 +14,7 @@
         }
       </mat-nav-list>
 
-      <button class="sidenav-control-button" matIconButton [matMenuTriggerFor]="menu" matTooltip="Sidenav control" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
+      <button class="sidenav-control-button" matIconButton [matMenuTriggerFor]="menu" [matTooltip]="'SidenavControl' | transloco" (menuOpened)="onMenuOpened()" (menuClosed)="onMenuClosed()">
         <mat-icon>compare</mat-icon>
       </button>
 
@@ -23,7 +23,7 @@
         <button mat-menu-item (click)="onSidenavControlClick(item.control)">
           <mat-icon [style.font-size.px]="12" [style.width.px]="12" [style.height.px]="12" [style.line-height.px]="12"
             [style.visibility]="sidenavControl() === item.control ? 'visible' : 'hidden'">lens</mat-icon>
-          <span>{{ item.caption }}</span>
+          <span>{{ item.caption | transloco}}</span>
         </button>
         }
       </mat-menu>

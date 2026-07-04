@@ -1,4 +1,22 @@
 {
   "Home": "Hem",
-  "Todos": "Att göra"
+  "Theme": "Tema",
+  "Todos": "Att göra",
+  "SidenavControl": "Meny-beteende",
+  "Expanded": "Expanderad",
+  "Collapsed": "Kollapsad",
+  "ExpandOnHover": "Expandera vid hovring",
+
+  "Red": "Röd",
+  "Green": "Grön",
+  "Blue": "Blå",
+  "Yellow": "Gul",
+  "Cyan": "Cyan",
+  "Magenta": "Magenta",
+  "Orange": "Orange",
+  "Chartreuse": "Chartreuse",
+  "SpringGreen": "Vårgrön",
+  "Azure": "Azurblå",
+  "Violet": "Violett",
+  "Rose": "Rosa"
 }
