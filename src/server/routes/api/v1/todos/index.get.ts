@@ -9,9 +9,9 @@ export default defineEventHandler(async (event: H3Event) => {
     .from('todos')
     .select();
 
-    if (error) {
-      throw createError({ statusCode: 500, message: error.message })
-    }
+  if (error) {
+    throw createError({ statusCode: 500, message: error.message })
+  }
 
-    return data;
+  return data;
 })
