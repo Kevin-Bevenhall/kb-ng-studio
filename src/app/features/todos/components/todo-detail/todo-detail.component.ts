@@ -8,12 +8,5 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   styleUrl: './todo-detail.component.scss',
 })
 export class TodoDetailComponent {
-  private todoService = inject(TodoService);
-
-  todoId = input.required<string>();
-
-  async test() {
-    const data = await this.todoService.getById('20');
-    console.log(data)
-  }
+  protected todoService = inject(TodoService);
 }

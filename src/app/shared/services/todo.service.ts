@@ -1,19 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { Service } from '@angular/core';
 import { Todo } from 'src/app/core/api/models/todos/todo';
+import { StoreBaseService } from './store-base.service';
 
 @Service()
-export class TodoService {
-  private http = inject(HttpClient);
-
-  baseQueryUrl = '/api/v1/todos';
-
-  getAll() {
-    return firstValueFrom(this.http.get<Todo[]>(this.baseQueryUrl));
-  }
-
-  getById(id: string) {
-    return firstValueFrom(this.http.get<Todo>(`${this.baseQueryUrl}/${id}`));
-  }
+export class TodoService extends StoreBaseService<Todo> {
+  protected baseQueryUrl = '/api/v1/todos';
+  protected queryKey = 'todos';
 }

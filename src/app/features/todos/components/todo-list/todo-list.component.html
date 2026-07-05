@@ -1,4 +1,6 @@
 <app-data-grid
-[dataSource]="todosQuery.data()"
+[dataService]="todoService"
 [columns]="columns">
 </app-data-grid>
+
+<button (click)="route()">route</button>

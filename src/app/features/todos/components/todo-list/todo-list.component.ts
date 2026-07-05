@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { TranslocoService } from '@jsverse/transloco';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Todo } from 'src/app/core/api/models/todos/todo';
 import { DataGridColumn, DataGridComponent } from 'src/app/core/components/data-grid/data-grid.component';
 import { TodoService } from 'src/app/shared/services/todo.service';
@@ -12,14 +11,8 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   styleUrl: './todo-list.component.scss',
 })
 export class TodoListComponent {
-  private todoService = inject(TodoService);
-  private translocoService = inject(TranslocoService);
-
-  todosQuery = injectQuery(() => ({
-    queryKey: ['todos'],
-    queryFn: () => this.todoService.getAll(),
-    refetchOnWindowFocus: false
-  }));
+  protected todoService = inject(TodoService);
+  private router = inject(Router);
 
   columns: DataGridColumn<Todo>[] = [
     {
@@ -33,4 +26,8 @@ export class TodoListComponent {
       cell: (todo) => todo.created_at
     }
   ]
+
+  route(){
+    this.router.navigateByUrl('/todos/39');
+  }
 }
