@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { AuthGuard } from "./shared/guards/auth.guard";
 import { GuestGuard } from "./shared/guards/guest.guard";
+import { TodoService } from "./shared/services/todo.service";
 
 export const routes: Routes = [
   {
@@ -21,6 +22,6 @@ export const routes: Routes = [
   {
     path: 'todos',
     loadChildren: () => import('./features/todos/todos.routes').then(m => m.todosRoutes),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   }
 ]
