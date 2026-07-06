@@ -1,6 +1,11 @@
 <app-data-grid
-[dataService]="todoService"
-[columns]="columns">
+  [dataService]="todoService"
+  [columns]="columns"
+  [data]="data()"
+  [isLoading]="isLoading()"
+  [hasError]="hasError()"
+  [error]="error()"
+  >
 </app-data-grid>
 
 <button (click)="route()">route</button>

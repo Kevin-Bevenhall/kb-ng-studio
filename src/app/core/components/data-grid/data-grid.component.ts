@@ -16,12 +16,17 @@ export type DataGridColumn<T = any> = {
   styleUrl: './data-grid.component.scss',
 })
 export class DataGridComponent<T> {
-  dataService = input.required<StoreBaseService<T>>();
   columns = input.required<DataGridColumn<T>[]>();
+  dataService = input.required<StoreBaseService<T>>();
 
-  dataSource = computed(() => this.dataService().data());
-  isLoading = computed(() => this.dataService().isLoading());
-  isError = computed(() => this.dataService().isError());
+  data = input.required<T[]>();
+  isLoading = input.required<boolean>();
+  hasError = input.required<boolean>();
+  error = input<Error>();
 
   displayedColumns = computed(() => this.columns().map(c => c.columnDef));
+
+  refresh() {
+    this.dataService().reloadData();
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, inject, input } from '@angular/core';
+import { Todo } from 'src/app/core/api/models/todos/todo';
+import { BaseDataDetail } from 'src/app/core/base/base-data-detail-page';
 import { TodoService } from 'src/app/shared/services/todo.service';
 
 @Component({
@@ -7,6 +9,7 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   templateUrl: './todo-detail.component.html',
   styleUrl: './todo-detail.component.scss',
 })
-export class TodoDetailComponent {
-  protected todoService = inject(TodoService);
+export class TodoDetailComponent extends BaseDataDetail<Todo> {
+  protected dataService = inject(TodoService);
+  todoId = input.required<number>();
 }

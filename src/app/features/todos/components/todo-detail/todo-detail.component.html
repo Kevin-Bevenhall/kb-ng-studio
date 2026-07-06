@@ -1,9 +1,0 @@
-@if (todoService.detailIsError()) {
-  <div> {{ todoService.detailError()?.message }} </div>
-} @else if (todoService.detailIsLoading()) {
-  <div>loading.</div>
-} @else if (todoService.detailData()) {
-  <div>
-    {{ todoService.detailData()?.name }}
-  </div>
-}

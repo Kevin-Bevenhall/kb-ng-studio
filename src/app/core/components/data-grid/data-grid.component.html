@@ -1,15 +1,23 @@
-<table mat-table [dataSource]="dataSource()">
+@if (isLoading()) {
+<div>loaading..</div>
+} @else {
+<table mat-table [dataSource]="data()">
   @for (column of columns(); track column) {
-    <ng-container [matColumnDef]="column.columnDef">
-      <th mat-header-cell *matHeaderCellDef>
-        {{ column.header | transloco }}
-      </th>
-      <td mat-cell *matCellDef="let row">
-        {{ column.cell(row) }}
-      </td>
-    </ng-container>
+  <ng-container [matColumnDef]="column.columnDef">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ column.header | transloco }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      {{ column.cell(row) }}
+    </td>
+  </ng-container>
   }
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
 </table>
+
+<button (click)="refresh()">
+reload resource!
+</button>
+}
