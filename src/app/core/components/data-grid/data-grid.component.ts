@@ -15,10 +15,13 @@ export type DataGridColumn<T = any> = {
   templateUrl: './data-grid.component.html',
   styleUrl: './data-grid.component.scss',
 })
-export class DataGridComponent {
-  dataService = input.required<StoreBaseService<any>>();
-  columns = input.required<DataGridColumn<any>[]>();
+export class DataGridComponent<T> {
+  dataService = input.required<StoreBaseService<T>>();
+  columns = input.required<DataGridColumn<T>[]>();
 
-  dataSource = computed(() => this.dataService().data() ?? [])
+  dataSource = computed(() => this.dataService().data());
+  isLoading = computed(() => this.dataService().isLoading());
+  isError = computed(() => this.dataService().isError());
+
   displayedColumns = computed(() => this.columns().map(c => c.columnDef));
 }

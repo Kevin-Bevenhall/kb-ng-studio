@@ -1,45 +1,40 @@
-import { HttpClient } from '@angular/common/http';
-import { computed, inject, Service, signal } from '@angular/core';
-import { injectQuery } from '@tanstack/angular-query-experimental';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { computed, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-@Service()
 export abstract class StoreBaseService<T> {
-  private http = inject(HttpClient);
+  private httpClient = inject(HttpClient);
 
   protected abstract readonly baseQueryUrl: string;
-  protected abstract readonly queryKey: string;
 
-  private query = injectQuery<T[]>(() => ({
-    queryKey: [`${this.queryKey}`],
-    queryFn: () => this.getAll()
-  }));
+  private resource = httpResource<T[]>(() => this.baseQueryUrl, {
+    defaultValue: []
+  });
 
-  data = computed<T[] | undefined>(() => this.query.data());
-  isLoading = computed(() => this.query.isLoading());
-  isError = computed(() => this.query.isError());
+  readonly data = computed(() => this.resource.value());
+  readonly error = computed(() => this.resource.error());
+  readonly isLoading = computed(() => this.resource.isLoading());
+  readonly isError = computed(() => this.resource.error() !== undefined);
 
-  detailId = signal<number | undefined>(undefined);
+  private detailId = signal<number | undefined>(undefined);
+  private detailResource = httpResource<T>(() => this.detailId() !== undefined ? `${this.baseQueryUrl}/${this.detailId()}` : undefined);
 
-  private detailQuery = injectQuery<T>(() => ({
-    queryKey: [`${this.queryKey}`, this.detailId()],
-    queryFn: () => this.getById(this.detailId()!),
-    enabled: this.detailId() !== undefined
-  }));
-
-  detailData = computed<T | undefined>(() => this.detailQuery.data());
-  detailIsLoading = computed(() => this.detailQuery.isLoading());
-  detailIsError = computed(() => this.detailQuery.isError());
+  readonly detailData = computed(() => this.detailResource.value());
+  readonly detailError = computed(() => this.detailResource.error());
+  readonly detailIsLoading = computed(() => this.detailResource.isLoading());
+  readonly detailIsError = computed(() => this.detailResource.error() !== undefined);
 
   setDetailId(id: number) {
     this.detailId.set(id);
   }
 
-  private getAll() {
-    return firstValueFrom(this.http.get<T[]>(this.baseQueryUrl));
+  resetDetailData() {
+    this.detailId.set(undefined);
   }
 
-  private getById(id: number) {
-    return firstValueFrom(this.http.get<T>(`${this.baseQueryUrl}/${id}`));
+  async create(payload: Partial<T>) {
+    const response = await firstValueFrom(this.httpClient.post<T>(this.baseQueryUrl, payload));
+    this.resource.reload();
+    return response;
   }
 }
