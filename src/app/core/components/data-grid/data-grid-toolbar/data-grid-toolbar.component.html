@@ -1,10 +1,16 @@
 <mat-toolbar>
   <mat-toolbar-row>
+
+    <button matButton="text" class="create-button" (click)="onCreateButtonClick()">
+      <span>{{'Create'|transloco}}</span>
+      <mat-icon>add</mat-icon>
+    </button>
+
     <button matIconButton class="reload-button" (click)="onReloadButtonClick()">
       <mat-icon>refresh</mat-icon>
     </button>
 
-    <button matIconButton class="delete-button" (click)="onDeleteButtonClick()">
+    <button matIconButton class="delete-button" (click)="onDeleteButtonClick()" [disabled]="!hasSelection()">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-toolbar-row>

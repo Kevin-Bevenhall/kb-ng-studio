@@ -1,23 +1,27 @@
-<div class="grid-container">
-  <app-data-grid-toolbar (delete)="onToolbarDeleteClick()" (reload)="onToolbarReloadClick()">
-  </app-data-grid-toolbar>
-  <table mat-table [dataSource]="data()">
-    @for (column of columns(); track column) {
-    <ng-container [matColumnDef]="column.columnDef">
-      <th mat-header-cell *matHeaderCellDef>
-        {{ column.header | transloco }}
-      </th>
-      <td mat-cell *matCellDef="let row">
-        {{ column.cell(row) }}
-      </td>
-    </ng-container>
-    }
+<app-data-grid-toolbar 
+  (delete)="onToolbarDeleteClick()" 
+  (reload)="onToolbarReloadClick()"
+  (create)="onToolbarCreateClick()"
+  [hasSelection]="hasSelection()">
+</app-data-grid-toolbar>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns()" (click)="onRowClick($event, row.id)"></tr>
-  </table>
-
-  @if (isLoading()) {
-  <mat-spinner />
+<table mat-table [dataSource]="data()">
+  @for (column of columns(); track column) {
+  <ng-container [matColumnDef]="column.columnDef">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ column.header | transloco }}
+    </th>
+    <td mat-cell *matCellDef="let row">
+      {{ column.cell(row) }}
+    </td>
+  </ng-container>
   }
-</div>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns()" (click)="onRowClick($event, row.id)"
+    [class.selected]="selection.isSelected(row.id)" (dblclick)="onRowDblClick($event, row.id)"></tr>
+</table>
+
+@if (isLoading()) {
+<mat-spinner />
+}

@@ -14,6 +14,9 @@ export class TodoListComponent implements OnInit {
   protected todoService = inject(TodoService);
   private router = inject(Router);
 
+  detailUrl = '/todos/';
+  createUrl = '/todos/create';
+
   data = this.todoService.data;
   isLoading = this.todoService.isLoading;
   hasError = this.todoService.hasError;

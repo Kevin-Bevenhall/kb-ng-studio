@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -18,6 +18,8 @@ export class DataGridComponent<T> {
 
   columns = input.required<DataGridColumn<T>[]>();
   dataService = input.required<StoreBaseService<T>>();
+  detailUrl = input<string>();
+  createUrl = input<string>();
 
   data = input.required<T[]>();
   isLoading = input.required<boolean>();
@@ -26,7 +28,8 @@ export class DataGridComponent<T> {
 
   displayedColumns = computed(() => this.columns().map(c => c.columnDef));
 
-  selectedRows = new SelectionModel<number>(true);
+  selection = new SelectionModel(true);
+  hasSelection = signal(false);
 
   onToolbarDeleteClick() {
     console.log('delete click')
@@ -36,10 +39,28 @@ export class DataGridComponent<T> {
     this.dataService().reloadData();
   }
 
+  onToolbarCreateClick() {
+    this.router.navigateByUrl(`${this.createUrl()}`);
+  }
+
   onRowClick(event: MouseEvent, id: number) {
-    console.log(event)
-    this.selectedRows.toggle(id);
-    console.log(this.selectedRows.selected)
+    if (event.detail > 1) return;
+    const isSelected = this.selection.isSelected(id);
+
+    if (event.ctrlKey) {
+      this.selection.toggle(id);
+    } else {
+      this.selection.clear();
+      if (!isSelected) {
+        this.selection.select(id);
+      }
+    }
+
+    this.hasSelection.set(this.selection.hasValue());
+  }
+
+  onRowDblClick(event: MouseEvent, id: number) {
+    this.router.navigateByUrl(`${this.detailUrl()}${id}`);
   }
 }
 

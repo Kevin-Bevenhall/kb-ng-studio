@@ -2,7 +2,12 @@
 
 :root {
   @include mat.button-overrides((
-    ))
+  ));
+
+  @include mat.fab-overrides((
+    container-color: var(--mat-sys-surface),
+    container-elevation-shadow: var(--mat-sys-level5)
+  ))
 }
 
 .error {

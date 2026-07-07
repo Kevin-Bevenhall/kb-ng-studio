@@ -1,12 +1,12 @@
-.grid-container {
-  display: relative;
-  height: 100%;
-  width: 100%;
-}
+@use '@angular/material' as mat;
 
 mat-spinner {
   position: absolute;
   top: 50%;
   left: 50%;
   
+}
+
+.selected {
+  background: var(--mat-sys-secondary-container);
 }

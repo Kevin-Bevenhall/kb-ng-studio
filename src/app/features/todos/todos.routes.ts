@@ -3,6 +3,8 @@ import { DrawerLayoutComponent } from "src/app/core/layout/drawer-layout/drawer-
 import { TodoDetailComponent } from "./components/todo-detail/todo-detail.component";
 import { TodoListComponent } from "./components/todo-list/todo-list.component";
 import { TodoListPageComponent } from "./pages/todo-list-page/todo-list-page.component";
+import { TodoDetailPageComponent } from "./pages/todo-detail-page/todo-detail-page.component";
+import { TodoCreatePageComponent } from "./pages/todo-create-page/todo-create-page.component";
 
 export const todosRoutes: Routes = [
   {
@@ -18,8 +20,12 @@ export const todosRoutes: Routes = [
             outlet: 'content'
           },
           {
+            path: 'create',
+            component: TodoCreatePageComponent
+          },
+          {
             path: ':todoId',
-            component: TodoDetailComponent,
+            component: TodoDetailPageComponent,
           }
         ]
       },

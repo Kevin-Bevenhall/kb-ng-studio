@@ -11,10 +11,25 @@ mat-toolbar {
 
   mat-toolbar-row {
     height: 100%;
-    padding-left: 6px;
-  }
-}
+    padding-left: 0px;
 
-mat-icon {
-  color: var(--mat-sys-primary);
+    mat-icon {
+      color: var(--mat-sys-primary);
+    }
+  }
+
+  .create-button {
+    color: var(--mat-sys-primary);
+
+    span {
+      display: inline-block;
+      margin-top: 1px;
+    }
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      margin-right: 2px;
+    }
+  }
 }
