@@ -1,8 +1,13 @@
 @use '@angular/material' as mat;
 @use 'styles/button-overrides.scss' as button-overrides;
 @use 'styles/custom-tokens.scss' as custom-tokens;
-@use './styles/list-overrides.scss' as list-overrides;
+@use 'styles/list-overrides.scss' as list-overrides;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html {
   height: 100%;
