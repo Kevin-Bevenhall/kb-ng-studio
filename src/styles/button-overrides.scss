@@ -7,6 +7,10 @@
   @include mat.fab-overrides((
     container-color: var(--mat-sys-surface),
     container-elevation-shadow: var(--mat-sys-level5)
+  ));
+
+  @include mat.icon-button-overrides((
+    icon-color: var(--mat-sys-primary),
   ))
 }
 

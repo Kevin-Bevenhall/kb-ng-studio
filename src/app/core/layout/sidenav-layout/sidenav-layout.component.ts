@@ -8,6 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { DrawerLayoutComponent } from '../drawer-layout/drawer-layout.component';
 
 @Component({
   selector: 'app-sidenav-layout',

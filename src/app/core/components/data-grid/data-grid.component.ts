@@ -1,7 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, model, signal, viewChild } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { StoreBaseService } from 'src/app/shared/services/store-base.service';
@@ -9,7 +10,7 @@ import { DataGridToolbarComponent } from './data-grid-toolbar/data-grid-toolbar.
 
 @Component({
   selector: 'app-data-grid',
-  imports: [MatTableModule, TranslocoPipe, DataGridToolbarComponent, MatProgressSpinnerModule],
+  imports: [MatTableModule, TranslocoPipe, DataGridToolbarComponent, MatProgressSpinnerModule, MatSortModule],
   templateUrl: './data-grid.component.html',
   styleUrl: './data-grid.component.scss',
 })
@@ -22,17 +23,25 @@ export class DataGridComponent<T> {
   createUrl = input<string>();
 
   data = input.required<T[]>();
-  isLoading = input.required<boolean>();
+  isLoading = model.required<boolean>();
   hasError = input.required<boolean>();
-  error = input<Error>();
+  error = input.required<Error>();
 
+
+  sort = viewChild(MatSort);
+
+  dataSource = computed(() => {
+    const dataSource = new MatTableDataSource(this.data());
+    dataSource.sort = this.sort();
+    return dataSource;
+  });
   displayedColumns = computed(() => this.columns().map(c => c.columnDef));
 
-  selection = new SelectionModel(true);
-  hasSelection = signal(false);
+  selection = new SelectionModel<number>(true);
+  selectionCount = signal(0);
 
   onToolbarDeleteClick() {
-    console.log('delete click')
+    this.dataService().delete(this.selection.selected)
   }
 
   onToolbarReloadClick() {
@@ -40,7 +49,17 @@ export class DataGridComponent<T> {
   }
 
   onToolbarCreateClick() {
-    this.router.navigateByUrl(`${this.createUrl()}`);
+    setTimeout(() => {
+      this.router.navigateByUrl(`${this.createUrl()}`);
+    }, 50);
+  }
+
+  onToolbarOpenDetailClick() {
+    const selected = this.selection.selected;
+    if (selected.length !== 1) {
+      return;
+    }
+    this.router.navigateByUrl(`${this.detailUrl()}${selected}`)
   }
 
   onRowClick(event: MouseEvent, id: number) {
@@ -56,7 +75,7 @@ export class DataGridComponent<T> {
       }
     }
 
-    this.hasSelection.set(this.selection.hasValue());
+    this.selectionCount.set(this.selection.selected.length);
   }
 
   onRowDblClick(event: MouseEvent, id: number) {

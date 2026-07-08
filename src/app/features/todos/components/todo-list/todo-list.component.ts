@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Todo } from 'src/app/core/api/models/todos/todo';
@@ -9,10 +10,12 @@ import { TodoService } from 'src/app/shared/services/todo.service';
   imports: [DataGridComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss',
+  providers: [DatePipe]
 })
 export class TodoListComponent implements OnInit {
   protected todoService = inject(TodoService);
   private router = inject(Router);
+  private datePipe = inject(DatePipe);
 
   detailUrl = '/todos/';
   createUrl = '/todos/create';
@@ -29,9 +32,9 @@ export class TodoListComponent implements OnInit {
       cell: (todo) => todo.name
     },
     {
-      columnDef: 'created',
+      columnDef: 'created_at',
       header: 'Created',
-      cell: (todo) => todo.created_at
+      cell: (todo) => this.datePipe.transform(todo.created_at, 'HH:mm, yyyy-MM-dd'),
     }
   ]
 

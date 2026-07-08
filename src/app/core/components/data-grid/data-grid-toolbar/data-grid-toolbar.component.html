@@ -6,12 +6,19 @@
       <mat-icon>add</mat-icon>
     </button>
 
-    <button matIconButton class="reload-button" (click)="onReloadButtonClick()">
+    <button matIconButton class="reload-button" (click)="onReloadButtonClick()" [disabled]="isLoading()" [matTooltip]="'Refresh'|transloco">
       <mat-icon>refresh</mat-icon>
     </button>
 
-    <button matIconButton class="delete-button" (click)="onDeleteButtonClick()" [disabled]="!hasSelection()">
+    <button matIconButton class="delete-button" (click)="onDeleteButtonClick()" [disabled]="!selectionCount()" [matTooltip]="'Delete'|transloco">
       <mat-icon>delete</mat-icon>
     </button>
+
+    @if (selectionCount() === 1) {
+    <button matIconButton class="open-detail-button" (click)="onOpenDetailButtonClick()" [matTooltip]="'Open'|transloco">
+      <mat-icon>open_in_new</mat-icon>
+    </button>
+    }
+
   </mat-toolbar-row>
 </mat-toolbar>

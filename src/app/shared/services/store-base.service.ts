@@ -49,4 +49,11 @@ export abstract class StoreBaseService<T> {
   getById(id: number) {
     return lastValueFrom(this.httpClient.get<T>(`${this.baseQueryUrl}/${id}`));
   }
+
+  delete(ids: number[]) {
+    console.log('Deleting payload');
+    ids.forEach((id) => {
+      console.log(id)
+    })
+  }
 }

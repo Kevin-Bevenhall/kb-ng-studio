@@ -12,14 +12,11 @@ mat-toolbar {
   mat-toolbar-row {
     height: 100%;
     padding-left: 0px;
-
-    mat-icon {
-      color: var(--mat-sys-primary);
-    }
   }
 
   .create-button {
     color: var(--mat-sys-primary);
+    display: flex;
 
     span {
       display: inline-block;
