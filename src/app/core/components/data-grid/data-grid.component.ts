@@ -7,6 +7,10 @@ import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { StoreBaseService } from 'src/app/shared/services/store-base.service';
 import { DataGridToolbarComponent } from './data-grid-toolbar/data-grid-toolbar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { first, take, tap } from 'rxjs';
+import { ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-data-grid',
@@ -16,6 +20,7 @@ import { DataGridToolbarComponent } from './data-grid-toolbar/data-grid-toolbar.
 })
 export class DataGridComponent<T> {
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   columns = input.required<DataGridColumn<T>[]>();
   dataService = input.required<StoreBaseService<T>>();
@@ -25,8 +30,7 @@ export class DataGridComponent<T> {
   data = input.required<T[]>();
   isLoading = model.required<boolean>();
   hasError = input.required<boolean>();
-  error = input.required<Error>();
-
+  error = input.required<Error | undefined>();
 
   sort = viewChild(MatSort);
 
@@ -41,7 +45,22 @@ export class DataGridComponent<T> {
   selectionCount = signal(0);
 
   onToolbarDeleteClick() {
-    this.dataService().delete(this.selection.selected)
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: <ConfirmDialogData> {
+        title: 'DeleteTodos',
+        text: 'DeleteTodosConfirmationText'
+      }
+    });
+    dialogRef.afterClosed().pipe(
+      first(),
+      tap((result) => {
+        if (result === true) {
+          console.log('Send it, cronk.')
+        } else {
+          console.log('Do nothing.')
+        }
+      })
+    ).subscribe()
   }
 
   onToolbarReloadClick() {

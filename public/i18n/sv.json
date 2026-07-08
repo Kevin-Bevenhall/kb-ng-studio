@@ -12,6 +12,10 @@
   "Refresh": "Ladda om",
   "Delete": "Ta bort",
   "Open": "Öppna",
+  "DeleteTodos": "Ta bort att-göra-uppgifter",
+  "DeleteTodosConfirmationText": "Är du säker på att du vill ta bort dessa att-göra-uppgifter?",
+  "No": "Nej",
+  "Yes": "Ja",
 
   "Red": "Röd",
   "Green": "Grön",

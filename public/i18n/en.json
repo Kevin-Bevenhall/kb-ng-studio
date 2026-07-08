@@ -12,6 +12,10 @@
   "Refresh": "Refresh",
   "Delete": "Delete",
   "Open": "Open",
+  "DeleteTodos": "Delete todos",
+  "DeleteTodosConfirmationText": "Are you sure you want to delete these todos?",
+  "No": "No",
+  "Yes": "Yes",
 
   "Red": "Red",
   "Green": "Green",
