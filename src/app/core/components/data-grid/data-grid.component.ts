@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, computed, inject, input, model, signal, viewChild } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, model, signal, viewChild } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -11,10 +11,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { first, take, tap } from 'rxjs';
 import { ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
+import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-data-grid',
-  imports: [MatTableModule, TranslocoPipe, DataGridToolbarComponent, MatProgressSpinnerModule, MatSortModule],
+  imports: [MatTableModule, TranslocoPipe, DataGridToolbarComponent, MatProgressSpinnerModule, MatSortModule, CdkDropList, CdkDrag],
   templateUrl: './data-grid.component.html',
   styleUrl: './data-grid.component.scss',
 })
@@ -39,28 +40,44 @@ export class DataGridComponent<T> {
     dataSource.sort = this.sort();
     return dataSource;
   });
-  displayedColumns = computed(() => this.columns().map(c => c.columnDef));
+  displayedColumns = linkedSignal(() => this.columns().map(c => c.columnDef));
 
   selection = new SelectionModel<number>(true);
   selectionCount = signal(0);
 
+  columnDrop(event: CdkDragDrop<string>) {
+    moveItemInArray(this.displayedColumns(), event.previousIndex, event.currentIndex);
+  }
+
+  temp() {
+    this.dataService().create({ name: 'Testing' })
+  }
+
   onToolbarDeleteClick() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: <ConfirmDialogData> {
-        title: 'DeleteTodos',
-        text: 'DeleteTodosConfirmationText'
+      data: <ConfirmDialogData>{
+        title: 'DeleteItems',
+        text: 'DeleteItemsConfirmationText'
       }
     });
-    dialogRef.afterClosed().pipe(
-      first(),
-      tap((result) => {
-        if (result === true) {
-          console.log('Send it, cronk.')
-        } else {
-          console.log('Do nothing.')
-        }
-      })
-    ).subscribe()
+    const dialogComponent = dialogRef.componentInstance;
+
+    dialogComponent.confirm.subscribe(async () => {
+      dialogComponent.loading.set(true);
+      await this.deleteSelection();
+      dialogRef.close();
+    });
+
+    dialogComponent.cancel.subscribe(() => {
+      dialogRef.close()
+    })
+  }
+
+  async deleteSelection() {
+    await this.dataService().delete(this.selection.selected);
+
+    this.selection.clear();
+    this.selectionCount.set(0);
   }
 
   onToolbarReloadClick() {

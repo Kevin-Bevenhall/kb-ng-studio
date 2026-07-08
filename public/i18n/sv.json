@@ -12,8 +12,8 @@
   "Refresh": "Ladda om",
   "Delete": "Ta bort",
   "Open": "Öppna",
-  "DeleteTodos": "Ta bort att-göra-uppgifter",
-  "DeleteTodosConfirmationText": "Är du säker på att du vill ta bort dessa att-göra-uppgifter?",
+  "DeleteItems": "Ta bort föremål",
+  "DeleteItemsConfirmationText": "Är du säker på att du vill ta bort dessa föremål?",
   "No": "Nej",
   "Yes": "Ja",
 

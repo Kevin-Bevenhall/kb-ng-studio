@@ -1,6 +1,6 @@
 import { HttpClient, httpResource } from '@angular/common/http';
 import { computed, inject, Signal, signal } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 export abstract class StoreBaseService<T> {
   private httpClient = inject(HttpClient);
@@ -43,17 +43,23 @@ export abstract class StoreBaseService<T> {
   }
 
   getAll() {
-    return lastValueFrom(this.httpClient.get<T[]>(this.baseQueryUrl));
+    return firstValueFrom(this.httpClient.get<T[]>(this.baseQueryUrl));
   }
 
   getById(id: number) {
-    return lastValueFrom(this.httpClient.get<T>(`${this.baseQueryUrl}/${id}`));
+    return firstValueFrom(this.httpClient.get<T>(`${this.baseQueryUrl}/${id}`));
   }
 
-  delete(ids: number[]) {
-    console.log('Deleting payload');
-    ids.forEach((id) => {
-      console.log(id)
-    })
+  async create(payload: any) {
+    const result = await firstValueFrom(this.httpClient.post<T>(this.baseQueryUrl, payload));
+    this.resource.reload();
+    return result;
+  }
+
+  async delete(ids: number[]) {
+    await firstValueFrom(this.httpClient.delete(this.baseQueryUrl, {
+      body: { ids }
+    }));
+    this.resource.reload();
   }
 }

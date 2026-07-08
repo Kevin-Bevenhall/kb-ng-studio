@@ -12,8 +12,8 @@
   "Refresh": "Refresh",
   "Delete": "Delete",
   "Open": "Open",
-  "DeleteTodos": "Delete todos",
-  "DeleteTodosConfirmationText": "Are you sure you want to delete these todos?",
+  "DeleteItems": "Delete items",
+  "DeleteItemsConfirmationText": "Are you sure you want to delete these items?",
   "No": "No",
   "Yes": "Yes",
 
