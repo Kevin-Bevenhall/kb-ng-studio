@@ -16,7 +16,9 @@
   "DeleteItemsConfirmationText": "Är du säker på att du vill ta bort dessa föremål?",
   "No": "Nej",
   "Yes": "Ja",
-
+  "Priority": "Prioritet",
+  "Cancel": "Avbryt",
+  
   "Red": "Röd",
   "Green": "Grön",
   "Blue": "Blå",

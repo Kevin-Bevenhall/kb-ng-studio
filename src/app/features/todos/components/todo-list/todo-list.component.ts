@@ -35,6 +35,11 @@ export class TodoListComponent implements OnInit {
       columnDef: 'created_at',
       header: 'Created',
       cell: (todo) => this.datePipe.transform(todo.created_at, 'HH:mm, yyyy-MM-dd'),
+    },
+    {
+      columnDef: 'priority',
+      header: 'Priority',
+      cell: (todo) => todo.priority
     }
   ]
 

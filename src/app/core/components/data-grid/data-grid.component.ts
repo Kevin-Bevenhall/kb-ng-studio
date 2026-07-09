@@ -1,17 +1,21 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, computed, inject, input, linkedSignal, model, signal, viewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { StoreBaseService } from 'src/app/shared/services/store-base.service';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
 import { DataGridToolbarComponent } from './data-grid-toolbar/data-grid-toolbar.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { first, take, tap } from 'rxjs';
-import { ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
-import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+
+export type DataGridColumn<T = any> = {
+  columnDef: string,
+  header: string,
+  cell: (row: T) => any;
+}
 
 @Component({
   selector: 'app-data-grid',
@@ -47,10 +51,6 @@ export class DataGridComponent<T> {
 
   columnDrop(event: CdkDragDrop<string>) {
     moveItemInArray(this.displayedColumns(), event.previousIndex, event.currentIndex);
-  }
-
-  temp() {
-    this.dataService().create({ name: 'Testing' })
   }
 
   onToolbarDeleteClick() {
@@ -117,10 +117,4 @@ export class DataGridComponent<T> {
   onRowDblClick(event: MouseEvent, id: number) {
     this.router.navigateByUrl(`${this.detailUrl()}${id}`);
   }
-}
-
-export type DataGridColumn<T = any> = {
-  columnDef: string,
-  header: string,
-  cell: (row: T) => any;
 }

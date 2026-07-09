@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TodoListComponent } from '../../components/todo-list/todo-list.component';
 import { TitleComponent } from 'src/app/core/components/title/title.component';
+import { TodoListComponent } from '../../components/todo-list/todo-list.component';
 
 @Component({
   selector: 'app-todo-list-page',
@@ -8,6 +8,4 @@ import { TitleComponent } from 'src/app/core/components/title/title.component';
   templateUrl: './todo-list-page.component.html',
   styleUrl: './todo-list-page.component.scss',
 })
-export class TodoListPageComponent {
-
-}
+export class TodoListPageComponent { }

@@ -16,6 +16,8 @@
   "DeleteItemsConfirmationText": "Are you sure you want to delete these items?",
   "No": "No",
   "Yes": "Yes",
+  "Priority": "Priority",
+  "Cancel": "Cancel",
 
   "Red": "Red",
   "Green": "Green",
