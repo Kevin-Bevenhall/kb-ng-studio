@@ -1,0 +1,30 @@
+<form novalidate>
+  @for (field of fields(); track field.caption) {
+  <mat-form-field>
+    <mat-label>{{ field.caption | transloco }}</mat-label>
+
+    @switch (field.type) {
+
+    @case ('text') {
+    <input type="text" matInput [formField]="field.formField">
+    }
+
+    @case ('select') {
+    <mat-select [formField]="field.formField" canSelectNullableOptions>
+      <mat-option [value]="null">None</mat-option>
+      @for (option of field.options; track option.key) {
+      <mat-option [value]="option.value">{{ option.key }}</mat-option>
+      }
+    </mat-select>
+    }
+
+    
+
+    }
+
+    @if (field.formField().invalid()) {
+    <mat-error>{{ field.formField().errors()[0].message }}</mat-error>
+    }
+  </mat-form-field>
+  }
+</form>

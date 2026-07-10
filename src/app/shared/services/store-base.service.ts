@@ -62,4 +62,8 @@ export abstract class StoreBaseService<T> {
     }));
     this.resource.reload();
   }
+
+  test() {
+    console.log('Creating from service')
+  }
 }

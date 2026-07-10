@@ -1,60 +1,44 @@
-import { Component, inject, signal } from '@angular/core';
-import { form, FormField, minLength, required } from '@angular/forms/signals';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { Router } from '@angular/router';
-import { TranslocoPipe } from '@jsverse/transloco';
-import { TodoService } from 'src/app/shared/services/todo.service';
-import { getEnumDataSource } from 'src/app/shared/utils/get-enum-data-source';
-
-interface TodoAdd {
-  name: string;
-  priority: TodoPriorityEnum | '';
-}
-
-enum TodoPriorityEnum {
-  Low = "low",
-  Medium = "medium",
-  High = "high",
-  Critical = 'critical'
-}
+import { Component, inject, signal } from "@angular/core";
+import { form, minLength, required } from "@angular/forms/signals";
+import { Router } from "@angular/router";
+import { TodoCreate, TodoPriorityEnum } from "src/app/core/api/models/todos/todo";
+import { AddField, DataAddComponent } from "src/app/core/components/data-add/data-add.component";
+import { TodoService } from "src/app/shared/services/todo.service";
+import { getEnumDataSource } from "src/app/shared/utils/get-enum-data-source";
 
 @Component({
   selector: 'app-todo-create',
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormField, MatButtonModule, MatProgressSpinner, TranslocoPipe],
+  imports: [DataAddComponent],
   templateUrl: './todo-create.component.html',
   styleUrl: './todo-create.component.scss',
 })
 export class TodoCreateComponent {
+  protected todoService = inject(TodoService);
   private router = inject(Router);
-  private todoService = inject(TodoService);
 
-  priorities = getEnumDataSource(TodoPriorityEnum);
+  returnUrl = '/todos';
 
-  todoModel = signal<TodoAdd>({
-    name: '',
-    priority: ''
-  });
-
+  todoModel = signal<TodoCreate>({ name: '', priority: '' });
   todoForm = form(this.todoModel, (schemaPath) => {
-    required(schemaPath.name);
-    minLength(schemaPath.name, 3);
-    required(schemaPath.priority);
+    required(schemaPath.name, { message: 'Name is required.' });
   });
 
-  isCreating = signal(false);
+  todoFields: AddField[] = [
+    {
+      caption: 'Name',
+      type: 'text',
+      formField: this.todoForm.name
+    },
+    {
+      caption: 'Priority',
+      type: 'select',
+      formField: this.todoForm.priority,
+      options: getEnumDataSource(TodoPriorityEnum)
+    }
+  ];
 
-  async submit(event: SubmitEvent) {
-    event.preventDefault();
-    this.isCreating.set(true);
-    await this.todoService.create(this.todoForm().value());
-    this.router.navigateByUrl('/todos');
+  test() {
+    console.log(this.todoForm().value())
   }
 
-  return() {
-    this.router.navigateByUrl('/todos');
-  }
 }
