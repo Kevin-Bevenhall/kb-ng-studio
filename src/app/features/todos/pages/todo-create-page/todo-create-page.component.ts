@@ -8,5 +8,4 @@ import { TodoCreateComponent } from '../../components/todo-create/todo-create.co
   styleUrl: './todo-create-page.component.scss',
 })
 export class TodoCreatePageComponent {
-  drawerWidth = 'wide';
  }

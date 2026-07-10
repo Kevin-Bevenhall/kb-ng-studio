@@ -24,6 +24,10 @@
     [class.selected]="selection.isSelected(row.id)" (dblclick)="onRowDblClick($event, row.id)"></tr>
 </table>
 
+<div class="count">
+  {{ 'Showing' | transloco}} {{ data().length }} {{ 'row(s)' | transloco}}
+</div>
+
 @if (isLoading()) {
 <mat-spinner />
 }

@@ -13,7 +13,6 @@ export class DrawerLayoutComponent {
   width = signal<'narrow' | 'wide'>('narrow');
 
   onActivate(event: any) {
-    console.log(event);
     if (event.drawerWidth === 'wide') {
       this.width.set('wide');
     } else {

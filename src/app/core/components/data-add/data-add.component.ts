@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, input, signal } from '@angular/core';
 import { FieldTree, FormField } from '@angular/forms/signals';
 import { MatButtonModule } from "@angular/material/button";
@@ -27,9 +26,9 @@ export interface AddField {
 export class DataAddComponent<T> {
   private router = inject(Router);
 
-  dataService = input.required<StoreBaseService<T>>()
   form = input.required<FieldTree<unknown>>();
   fields = input.required<AddField[]>();
+  dataService = input.required<StoreBaseService<T>>();
   returnUrl = input.required<string>();
 
   isCreating = signal(false);
