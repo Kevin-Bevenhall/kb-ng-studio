@@ -7,4 +7,6 @@ import { TodoCreateComponent } from '../../components/todo-create/todo-create.co
   templateUrl: './todo-create-page.component.html',
   styleUrl: './todo-create-page.component.scss',
 })
-export class TodoCreatePageComponent { }
+export class TodoCreatePageComponent {
+  drawerWidth = 'wide';
+ }

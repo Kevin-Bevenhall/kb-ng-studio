@@ -1,4 +1,4 @@
-import { Component, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 
@@ -10,8 +10,15 @@ import { RouterOutlet } from '@angular/router';
 })
 export class DrawerLayoutComponent {
   drawer = viewChild.required(MatDrawer);
+  width = signal<'narrow' | 'wide'>('narrow');
 
-  onActivate() {
+  onActivate(event: any) {
+    console.log(event);
+    if (event.drawerWidth === 'wide') {
+      this.width.set('wide');
+    } else {
+      this.width.set('narrow');
+    }
     this.drawer().open();
   }
 

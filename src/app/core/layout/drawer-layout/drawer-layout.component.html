@@ -1,7 +1,7 @@
 <mat-drawer-container>
 
-  <mat-drawer position="end" disableClose="true" mode="over" >
-    <router-outlet (activate)="onActivate()" (deactivate)="onDeactivate()"></router-outlet>
+  <mat-drawer position="end" disableClose="true" mode="over" [style.width]="width() === 'narrow' ? '360px' : '540px'">
+    <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate()"></router-outlet>
   </mat-drawer>
 
   <mat-drawer-content>

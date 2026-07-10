@@ -9,7 +9,6 @@ export abstract class BaseDataDetailPage<T> extends BaseComponent {
 
     this.destroyRef.onDestroy(() => {
       this.dataService.resetDetailData();
-      console.log('resetting data.')
     })
   }
 }
