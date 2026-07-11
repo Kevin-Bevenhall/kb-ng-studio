@@ -1,5 +1,5 @@
 <form novalidate (submit)="onSubmit($event)">
-  @for (field of fields(); track field.caption) {
+  @for (field of addFields(); track field.caption) {
   <mat-form-field>
     <mat-label>{{ field.caption | transloco }}</mat-label>
 

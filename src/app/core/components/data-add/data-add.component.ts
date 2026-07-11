@@ -27,7 +27,7 @@ export class DataAddComponent<T> {
   private router = inject(Router);
 
   form = input.required<FieldTree<unknown>>();
-  fields = input.required<AddField[]>();
+  addFields = input.required<AddField[]>();
   dataService = input.required<StoreBaseService<T>>();
   returnUrl = input.required<string>();
 

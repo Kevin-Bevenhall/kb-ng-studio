@@ -15,5 +15,4 @@ export class TodoDetailPageComponent extends BaseDataDetailPage<Todo> {
   protected dataService = this.todoService;
 
   todoDetail = input.required<Todo>();
-
 }

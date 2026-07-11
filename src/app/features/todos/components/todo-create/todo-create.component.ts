@@ -23,7 +23,7 @@ export class TodoCreateComponent {
     required(schemaPath.name, { message: 'Name is required.' });
   });
 
-  todoFields: AddField[] = [
+  addFields: AddField[] = [
     {
       caption: 'Name',
       type: 'text',
@@ -36,9 +36,5 @@ export class TodoCreateComponent {
       options: getEnumDataSource(TodoPriorityEnum)
     }
   ];
-
-  test() {
-    console.log(this.todoForm().value())
-  }
 
 }
