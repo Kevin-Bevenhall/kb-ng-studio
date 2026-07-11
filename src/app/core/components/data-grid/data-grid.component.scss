@@ -9,7 +9,7 @@ mat-spinner {
 
 .table-scroll {
   overflow-y: auto;
-  height: calc(100% - 145px);
+  height: calc(100% - 140px);
 }
 
 .selected {
@@ -20,4 +20,10 @@ mat-spinner {
   position: absolute;
   bottom: 5px;
   left: 5px;
+}
+
+.no-data-display {
+  position: absolute;
+  top: 50%;
+  right: 50%;
 }

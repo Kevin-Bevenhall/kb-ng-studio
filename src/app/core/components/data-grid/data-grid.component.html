@@ -23,6 +23,10 @@
   </table>
 </div>
 
+@if (!data().length) {
+<div class="no-data-display">Empty</div>
+}
+
 <div class="count">
   {{ 'Showing' | transloco}} {{ data().length }} {{ 'row(s)' | transloco}}
 </div>
