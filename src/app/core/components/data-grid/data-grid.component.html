@@ -24,7 +24,7 @@
 </div>
 
 @if (!data().length) {
-<div class="no-data-display">Empty</div>
+  <app-empty [feature]="feature()"></app-empty>
 }
 
 <div class="count">
