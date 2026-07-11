@@ -47,6 +47,7 @@ export class DataDetailComponent<T> {
     const changes = this.getChanges();
     await this.dataService().updateById(this.todoId(), changes);
     this.isSaving.set(false);
+    this.form()().reset();
   }
 
   async onSaveAndClose() {
