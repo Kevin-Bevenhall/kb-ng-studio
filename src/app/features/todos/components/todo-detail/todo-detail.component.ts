@@ -6,6 +6,7 @@ import { DataDetailComponent, DetailField } from 'src/app/core/components/data-d
 import { TodoService } from 'src/app/shared/services/todo.service';
 import { getEnumDataSource } from 'src/app/shared/utils/get-enum-data-source';
 
+
 @Component({
   selector: 'app-todo-detail',
   imports: [DataDetailComponent],

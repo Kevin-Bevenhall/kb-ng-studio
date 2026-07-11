@@ -10,6 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { StoreBaseService } from 'src/app/shared/services/store-base.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from "../snackbar/snackbar.component";
 
 export interface DetailField {
   key: string;
@@ -27,6 +29,7 @@ export interface DetailField {
 })
 export class DataDetailComponent<T> {
   private router = inject(Router);
+  private snackbar = inject(MatSnackBar);
 
   form = input.required<FieldTree<unknown>>();
   detailFields = input.required<DetailField[]>();
@@ -48,6 +51,7 @@ export class DataDetailComponent<T> {
     await this.dataService().updateById(this.todoId(), changes);
     this.isSaving.set(false);
     this.form()().reset();
+    this.displaySnackbar();
   }
 
   async onSaveAndClose() {
@@ -55,6 +59,7 @@ export class DataDetailComponent<T> {
     const changes = this.getChanges();
     await this.dataService().updateById(this.todoId(), changes);
     this.isSaving.set(false);
+    this.displaySnackbar();
     this.return();
   }
 
@@ -68,6 +73,12 @@ export class DataDetailComponent<T> {
     }
 
     return changes;
+  }
+
+  displaySnackbar() {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      duration: 3000
+    });
   }
 
 }
