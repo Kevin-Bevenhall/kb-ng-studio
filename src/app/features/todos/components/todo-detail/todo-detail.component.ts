@@ -13,27 +13,32 @@ import { getEnumDataSource } from 'src/app/shared/utils/get-enum-data-source';
   styleUrl: './todo-detail.component.scss',
 })
 export class TodoDetailComponent {
-  private todoService = inject(TodoService);
+  protected todoService = inject(TodoService);
   private route = inject(ActivatedRoute);
 
-  returnUrl = '/todos';
+  todoDetail: Todo = this.route.snapshot.data['todoDetail'];
+  todoId = Number(this.route.snapshot.paramMap.get('todoId'));
 
-  todoModel = signal<Todo>(this.route.snapshot.data['todoDetail']);
+  todoModel = signal<Todo>(this.todoDetail);
   todoForm = form(this.todoModel, (schemaPath) => {
     required(schemaPath.name)
   });
 
   detailFields: DetailField[] = [
     {
+      key: 'name',
       caption: 'Name',
       type: 'text',
       formField: this.todoForm.name
     },
     {
+      key: 'priority',
       caption: 'Priority',
       type: 'select',
       formField: this.todoForm.priority,
       options: getEnumDataSource(TodoPriorityEnum)
     }
   ];
+
+  returnUrl = '/todos';
 }

@@ -17,13 +17,30 @@
       }
     </mat-select>
     }
-
     }
 
     @if (field.formField().invalid()) {
     <mat-error>{{ field.formField().errors()[0].message }}</mat-error>
     }
-    
+
   </mat-form-field>
   }
+
+  <div class="form-actions">
+
+    <button matButton="filled" type="button" [disabled]="form()().invalid() || isSaving() || !hasChanges()" [showProgress]="isSaving()" (click)="onSave()">
+      {{'Save'|transloco}}
+      <mat-progress-spinner progressIndicator mode="indeterminate" diameter="20" aria-label="Loading" tabindex="">
+      </mat-progress-spinner>
+    </button>
+
+    <button matButton="filled" type="button" [disabled]="form()().invalid() || isSaving() || !hasChanges()" [showProgress]="isSaving()" (click)="onSaveAndClose()">
+      {{'SaveAndClose'|transloco}}
+      <mat-progress-spinner progressIndicator mode="indeterminate" diameter="20" aria-label="Loading" tabindex="">
+      </mat-progress-spinner>
+    </button>
+
+    <button matButton="text" type="button" [disabled]="isSaving()" (click)="return()">{{'Close'|transloco}}</button>
+  </div>
+
 </form>

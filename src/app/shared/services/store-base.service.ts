@@ -65,6 +65,13 @@ export abstract class StoreBaseService<T> {
     this.resource.reload();
   }
 
+  async updateById(id: number, payload: Partial<T>) {
+    const result = await firstValueFrom(this.httpClient.patch<T>(`${this.baseQueryUrl}/${id}`, payload));
+    this.resource.reload();
+    this.detailResource.reload();
+    return result;
+  }
+
   resolveDetailById(detailId: number | string) {
     this.setDetailId(Number(detailId));
 
