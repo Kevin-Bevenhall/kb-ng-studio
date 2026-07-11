@@ -1,6 +1,6 @@
 <div>
   <mat-icon>{{ icon }}</mat-icon>
-  <span class="caption">{{ caption }}</span>
-  <span class="text">{{ text }}</span>
-  <button matButton="filled">{{ buttonText }}</button>
+  <span class="title">{{ title | transloco }}</span>
+  <span class="description">{{ description | transloco }}</span>
+  <button matButton="filled" (click)="create.emit()">{{ buttonText | transloco}}</button>
 </div>

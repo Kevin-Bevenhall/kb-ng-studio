@@ -1,0 +1,1 @@
+export type ApplicationFeature = 'Todo';

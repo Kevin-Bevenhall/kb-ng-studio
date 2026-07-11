@@ -6,7 +6,7 @@
       <mat-icon>add</mat-icon>
     </button>
 
-    <button matIconButton class="reload-button" (click)="onReloadButtonClick()" [disabled]="isLoading()" [matTooltip]="'Refresh'|transloco">
+    <button matIconButton class="reload-button" (click)="onReloadButtonClick()" [disabled]="isLoading() || dataCount() === 0" [matTooltip]="'Refresh'|transloco">
       <mat-icon>refresh</mat-icon>
     </button>
 

@@ -8,6 +8,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { StoreBaseService } from 'src/app/shared/services/store-base.service';
+import { ApplicationFeature } from '../../api/models/application/application-feature';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
 import { EmptyComponent } from '../empty/empty.component';
 import { DataGridToolbarComponent } from './data-grid-toolbar/data-grid-toolbar.component';
@@ -32,10 +33,9 @@ export class DataGridComponent<T> {
   dataService = input.required<StoreBaseService<T>>();
   detailUrl = input<string>();
   createUrl = input<string>();
-  feature = input<string>();
+  feature = input<ApplicationFeature>();
 
-  //data = input.required<T[]>();
-  data = signal([]);
+  data = input.required<T[]>();
   isLoading = model.required<boolean>();
   hasError = input.required<boolean>();
   error = input.required<Error | undefined>();

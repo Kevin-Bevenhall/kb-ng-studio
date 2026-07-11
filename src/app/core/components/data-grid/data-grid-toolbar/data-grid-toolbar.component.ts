@@ -13,6 +13,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 })
 export class DataGridToolbarComponent {
   selectionCount = input<number>(0);
+  dataCount = input<number>();
   isLoading = input<boolean>();
 
   delete = output();

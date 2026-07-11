@@ -18,6 +18,9 @@
   "Yes": "Yes",
   "Priority": "Priority",
   "Cancel": "Cancel",
+  "CreateTodo": "Create todo",
+  "TodosEmptyTitle": "No Todos Yet",
+  "TodosEmptyDescription": "You haven't created any todos yet. Get started by creating your first todo.",
 
   "Red": "Red",
   "Green": "Green",

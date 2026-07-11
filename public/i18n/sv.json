@@ -18,7 +18,10 @@
   "Yes": "Ja",
   "Priority": "Prioritet",
   "Cancel": "Avbryt",
-  
+  "CreateTodo": "Skapa uppgift",
+  "TodosEmptyTitle": "Inga uppgifter än",
+  "TodosEmptyDescription": "Du har inte skapat några uppgifter än. Skapa en uppgift för att komma igång.",
+
   "Red": "Röd",
   "Green": "Grön",
   "Blue": "Blå",

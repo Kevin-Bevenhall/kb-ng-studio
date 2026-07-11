@@ -1,6 +1,6 @@
 <app-data-grid-toolbar (delete)="onToolbarDeleteClick()" (reload)="onToolbarReloadClick()"
   (create)="onToolbarCreateClick()" (openDetail)="onToolbarOpenDetailClick()" [selectionCount]="selectionCount()"
-  [isLoading]="isLoading()">
+  [isLoading]="isLoading()" [dataCount]="data().length">
 </app-data-grid-toolbar>
 
 <div class="table-scroll">
@@ -23,14 +23,16 @@
   </table>
 </div>
 
+@if (isLoading() && data().length) {
+<mat-spinner />
+}
+
 @if (!data().length) {
-  <app-empty [feature]="feature()"></app-empty>
+<div class="empty-container">
+  <app-empty [feature]="feature()" (create)="onToolbarCreateClick()"></app-empty>
+</div>
 }
 
 <div class="count">
   {{ 'Showing' | transloco}} {{ data().length }} {{ 'row(s)' | transloco}}
 </div>
-
-@if (isLoading()) {
-<mat-spinner />
-}
