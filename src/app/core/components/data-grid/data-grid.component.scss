@@ -4,7 +4,12 @@ mat-spinner {
   position: absolute;
   top: 50%;
   left: 50%;
-  
+
+}
+
+.table-scroll {
+  overflow-y: auto;
+  height: calc(100% - 145px);
 }
 
 .selected {

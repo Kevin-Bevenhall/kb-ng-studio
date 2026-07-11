@@ -1,28 +1,27 @@
-<app-data-grid-toolbar 
-  (delete)="onToolbarDeleteClick()" 
-  (reload)="onToolbarReloadClick()"
-  (create)="onToolbarCreateClick()"
-  (openDetail)="onToolbarOpenDetailClick()"
-  [selectionCount]="selectionCount()"
+<app-data-grid-toolbar (delete)="onToolbarDeleteClick()" (reload)="onToolbarReloadClick()"
+  (create)="onToolbarCreateClick()" (openDetail)="onToolbarOpenDetailClick()" [selectionCount]="selectionCount()"
   [isLoading]="isLoading()">
 </app-data-grid-toolbar>
 
-<table mat-table [dataSource]="dataSource()" matSort cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="columnDrop($event)">
-  @for (column of columns(); track column) {
-  <ng-container [matColumnDef]="column.columnDef">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
-      {{ column.header | transloco }}
-    </th>
-    <td mat-cell *matCellDef="let row">
-      {{ column.cell(row) }}
-    </td>
-  </ng-container>
-  }
+<div class="table-scroll">
+  <table mat-table [dataSource]="dataSource()" matSort cdkDropList cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="columnDrop($event)">
+    @for (column of columns(); track column) {
+    <ng-container [matColumnDef]="column.columnDef">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
+        {{ column.header | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ column.cell(row) }}
+      </td>
+    </ng-container>
+    }
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns()" (click)="onRowClick($event, row.id)"
-    [class.selected]="selection.isSelected(row.id)" (dblclick)="onRowDblClick($event, row.id)"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns(); sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns()" (click)="onRowClick($event, row.id)"
+      [class.selected]="selection.isSelected(row.id)" (dblclick)="onRowDblClick($event, row.id)"></tr>
+  </table>
+</div>
 
 <div class="count">
   {{ 'Showing' | transloco}} {{ data().length }} {{ 'row(s)' | transloco}}
