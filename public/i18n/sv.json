@@ -21,6 +21,9 @@
   "CreateTodo": "Skapa uppgift",
   "TodosEmptyTitle": "Inga uppgifter än",
   "TodosEmptyDescription": "Du har inte skapat några uppgifter än. Skapa en uppgift för att komma igång.",
+  "Showing": "Visar",
+  "Row": "rad",
+  "Rows": "rader",
 
   "Red": "Röd",
   "Green": "Grön",

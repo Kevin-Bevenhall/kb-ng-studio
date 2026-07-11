@@ -14,5 +14,6 @@ export class TodoDetailPageComponent extends BaseDataDetailPage<Todo> {
   private todoService = inject(TodoService);
   protected dataService = this.todoService;
 
-  todoId = input.required<number>();
+  todoDetail = input.required<Todo>();
+
 }

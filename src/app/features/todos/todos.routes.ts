@@ -3,6 +3,7 @@ import { DrawerLayoutComponent } from "src/app/core/layout/drawer-layout/drawer-
 import { TodoCreatePageComponent } from "./pages/todo-create-page/todo-create-page.component";
 import { TodoDetailPageComponent } from "./pages/todo-detail-page/todo-detail-page.component";
 import { TodoListPageComponent } from "./pages/todo-list-page/todo-list-page.component";
+import { TodoDetailResolver } from "src/app/shared/services/todo.service";
 
 export const todosRoutes: Routes = [
   {
@@ -21,6 +22,9 @@ export const todosRoutes: Routes = [
       {
         path: ':todoId',
         component: TodoDetailPageComponent,
+        resolve: {
+          todoDetail: TodoDetailResolver
+        }
       }
     ]
   }

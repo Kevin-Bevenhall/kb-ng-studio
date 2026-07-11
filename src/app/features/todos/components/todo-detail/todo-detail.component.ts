@@ -9,5 +9,4 @@ import { TodoService } from 'src/app/shared/services/todo.service';
 })
 export class TodoDetailComponent {
   private todoService = inject(TodoService);
-  todoId = input.required<number>();
 }

@@ -34,5 +34,9 @@
 }
 
 <div class="count">
-  {{ 'Showing' | transloco}} {{ data().length }} {{ 'row(s)' | transloco}}
+  @if (data().length === 1) {
+    {{ 'Showing' | transloco}} 1 {{ 'Row' | transloco}}
+  } @else {
+    {{ 'Showing' | transloco}} {{ data().length }} {{ 'Rows' | transloco}}
+  }
 </div>

@@ -21,6 +21,9 @@
   "CreateTodo": "Create todo",
   "TodosEmptyTitle": "No Todos Yet",
   "TodosEmptyDescription": "You haven't created any todos yet. Get started by creating your first todo.",
+  "Showing": "Showing",
+  "Row": "row",
+  "Rows": "rows",
 
   "Red": "Red",
   "Green": "Green",
